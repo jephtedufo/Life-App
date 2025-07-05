@@ -32,6 +32,9 @@ const nextConfig = {
       },
     ];
   },
+  // Optimize for Vercel
+  output: 'standalone',
+  poweredByHeader: false,
 };
 
 module.exports = nextConfig; 

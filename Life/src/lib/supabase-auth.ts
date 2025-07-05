@@ -5,6 +5,14 @@ export const authService = {
   // Sign up new user
   async signUp(email: string, password: string, firstName: string, lastName: string) {
     try {
+      // Check if user already exists
+      const { data: existingUser } = await supabase.auth.admin.listUsers();
+      const userExists = existingUser?.users?.some(user => user.email === email);
+      
+      if (userExists) {
+        return { user: null, error: 'Email already exists' };
+      }
+
       // Create user in Supabase Auth
       const { data: authData, error: authError } = await supabase.auth.signUp({
         email,
@@ -17,7 +25,13 @@ export const authService = {
         },
       });
 
-      if (authError) throw authError;
+      if (authError) {
+        // Handle specific Supabase errors
+        if (authError.message.includes('already registered')) {
+          return { user: null, error: 'Email already exists' };
+        }
+        throw authError;
+      }
 
       if (authData.user) {
         // Insert user profile into profiles table
@@ -30,7 +44,11 @@ export const authService = {
             last_name: lastName,
           });
 
-        if (profileError) throw profileError;
+        if (profileError) {
+          // If profile creation fails, clean up the auth user
+          await supabase.auth.admin.deleteUser(authData.user.id);
+          throw profileError;
+        }
 
         // Initialize user data
         await this.initializeUserData(authData.user.id);
@@ -40,7 +58,11 @@ export const authService = {
 
       return { user: null, error: 'User creation failed' };
     } catch (error: any) {
-      return { user: null, error: error.message };
+      console.error('Signup error:', error);
+      if (error.message.includes('already registered') || error.message.includes('already exists')) {
+        return { user: null, error: 'Email already exists' };
+      }
+      return { user: null, error: error.message || 'An error occurred during signup' };
     }
   },
 
@@ -52,7 +74,16 @@ export const authService = {
         password,
       });
 
-      if (error) throw error;
+      if (error) {
+        // Handle specific Supabase auth errors
+        if (error.message.includes('Invalid login credentials')) {
+          return { user: null, error: 'Invalid email or password' };
+        }
+        if (error.message.includes('Email not confirmed')) {
+          return { user: null, error: 'Please check your email and confirm your account' };
+        }
+        throw error;
+      }
 
       if (data.user) {
         // Get user profile
@@ -62,14 +93,33 @@ export const authService = {
           .eq('id', data.user.id)
           .single();
 
-        if (profileError) throw profileError;
+        if (profileError) {
+          console.error('Profile fetch error:', profileError);
+          // Return user data from auth if profile fetch fails
+          return { 
+            user: {
+              id: data.user.id,
+              email: data.user.email || '',
+              first_name: data.user.user_metadata?.first_name || '',
+              last_name: data.user.user_metadata?.last_name || '',
+              profile_picture: data.user.user_metadata?.profile_picture,
+              created_at: data.user.created_at,
+              updated_at: data.user.updated_at,
+            }, 
+            error: null 
+          };
+        }
 
         return { user: profile, error: null };
       }
 
-      return { user: null, error: 'Login failed' };
+      return { user: null, error: 'Invalid email or password' };
     } catch (error: any) {
-      return { user: null, error: error.message };
+      console.error('Signin error:', error);
+      if (error.message.includes('Invalid login credentials')) {
+        return { user: null, error: 'Invalid email or password' };
+      }
+      return { user: null, error: error.message || 'An error occurred during login' };
     }
   },
 
