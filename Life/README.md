@@ -1,40 +1,78 @@
-# Life App Backend (Simple Version)
+# Life App
 
-A simple Next.js backend for the Life App.
-
-## Quick Start
-
-1. **Install dependencies:**
-   ```bash
-   npm install
-   ```
-
-2. **Run locally:**
-   ```bash
-   npm run dev
-   ```
-
-3. **Deploy to Vercel:**
-   - Connect your GitHub repository to Vercel
-   - Set Root Directory to `/` (or the folder containing this backend)
-   - Deploy!
-
-## API Endpoints
-
-- `GET /api/hello` - Test endpoint
-- `GET /api/habits` - Get all habits
-- `POST /api/habits` - Create a new habit
-- `GET /api/points` - Get all points
-- `POST /api/points` - Add new points
+A simple habit tracking and calendar application built with Next.js and React.
 
 ## Features
 
-- ✅ Simple and reliable
-- ✅ No database setup required (in-memory storage)
-- ✅ Easy to deploy
-- ✅ TypeScript errors ignored for deployment
-- ✅ Ready for production
+- 📅 **Calendar View** - Track your daily habits and activities
+- ✅ **Habit Management** - Create, edit, and track your habits
+- 🎯 **Points System** - Earn points for completing tasks and habits
+- 📊 **Statistics** - View your progress and achievements
+- 🎨 **Modern UI** - Clean and responsive design with Tailwind CSS
 
-## Testing
+## Getting Started
 
-Visit `http://localhost:3001/api/hello` to test the backend. 
+### Prerequisites
+
+- Node.js (version 18 or higher)
+- npm or yarn
+
+### Installation
+
+1. Clone the repository:
+```bash
+git clone https://github.com/yourusername/life-app.git
+cd life-app
+```
+
+2. Install dependencies:
+```bash
+npm install
+```
+
+3. Start the development server:
+```bash
+npm run dev
+```
+
+4. Open [http://localhost:3001](http://localhost:3001) in your browser.
+
+## Usage
+
+- **Calendar Page**: View and manage your daily habits
+- **Habits Page**: Create and edit your habits and tasks
+- **Points Page**: Track your points and rewards
+
+## Technology Stack
+
+- **Frontend**: React, TypeScript, Tailwind CSS
+- **Backend**: Next.js API routes
+- **Styling**: Tailwind CSS
+- **Icons**: Lucide React
+
+## Project Structure
+
+```
+src/
+├── app/                 # Next.js app directory
+│   ├── api/            # API routes
+│   ├── app/            # Main app page
+│   └── layout.tsx      # Root layout
+├── frontend/           # React components and pages
+│   ├── components/     # Reusable components
+│   ├── context/        # React context providers
+│   ├── pages/          # Page components
+│   ├── services/       # API services
+│   └── types/          # TypeScript type definitions
+```
+
+## Development
+
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run start` - Start production server
+- `npm run lint` - Run ESLint
+
+## License
+
+This project is open source and available under the [MIT License](LICENSE). 
