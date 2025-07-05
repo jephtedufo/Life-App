@@ -13,7 +13,7 @@ export async function GET(request: NextRequest): Promise<NextResponse<ApiRespons
       orderBy: { priority: 'asc' },
     });
 
-    const categoriesResponse: TaskCategoryResponse[] = categories.map(category => ({
+    const categoriesResponse: TaskCategoryResponse[] = categories.map((category: any) => ({
       id: category.id,
       name: category.name,
       description: category.description || undefined,

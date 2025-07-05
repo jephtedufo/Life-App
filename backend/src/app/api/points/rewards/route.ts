@@ -13,7 +13,7 @@ export async function GET(request: NextRequest): Promise<NextResponse<ApiRespons
       orderBy: { priority: 'asc' },
     });
 
-    const rewardsResponse: RewardResponse[] = rewards.map(reward => ({
+    const rewardsResponse: RewardResponse[] = rewards.map((reward: any) => ({
       id: reward.id,
       title: reward.title,
       description: reward.description,

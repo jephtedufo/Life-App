@@ -23,7 +23,7 @@ export async function GET(request: NextRequest): Promise<NextResponse<ApiRespons
       orderBy: { createdAt: 'desc' },
     });
 
-    const logsResponse: PointLogResponse[] = logs.map(log => ({
+    const logsResponse: PointLogResponse[] = logs.map((log: any) => ({
       id: log.id,
       categoryId: log.categoryId,
       description: log.description,

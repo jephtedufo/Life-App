@@ -97,7 +97,7 @@ export async function GET(
       orderBy: { date: 'desc' },
     });
 
-    const statusesResponse: HabitStatusResponse[] = statuses.map(status => ({
+    const statusesResponse: HabitStatusResponse[] = statuses.map((status: any) => ({
       id: status.id,
       habitId: status.habitId,
       date: status.date,

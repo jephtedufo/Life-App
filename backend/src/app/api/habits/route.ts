@@ -13,7 +13,7 @@ export async function GET(request: NextRequest): Promise<NextResponse<ApiRespons
       orderBy: { createdAt: 'desc' },
     });
 
-    const habitsResponse: HabitResponse[] = habits.map(habit => ({
+    const habitsResponse: HabitResponse[] = habits.map((habit: any) => ({
       id: habit.id,
       name: habit.name,
       description: habit.description || undefined,
