@@ -6,6 +6,10 @@ const nextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
+  // Disable static generation for auth pages
+  experimental: {
+    appDir: true,
+  },
   // Handle static files from frontend
   async rewrites() {
     return [

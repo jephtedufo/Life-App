@@ -29,30 +29,33 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
   // Load user from localStorage on mount
   useEffect(() => {
-    const savedUser = localStorage.getItem('life-app-user');
-    if (savedUser) {
-      try {
-        const user = JSON.parse(savedUser);
-        setAuthState({
-          user,
-          isAuthenticated: true,
-          isLoading: false,
-        });
-      } catch (error) {
-        console.error('Error parsing saved user:', error);
-        localStorage.removeItem('life-app-user');
+    // Only run on client side
+    if (typeof window !== 'undefined') {
+      const savedUser = localStorage.getItem('life-app-user');
+      if (savedUser) {
+        try {
+          const user = JSON.parse(savedUser);
+          setAuthState({
+            user,
+            isAuthenticated: true,
+            isLoading: false,
+          });
+        } catch (error) {
+          console.error('Error parsing saved user:', error);
+          localStorage.removeItem('life-app-user');
+          setAuthState({
+            user: null,
+            isAuthenticated: false,
+            isLoading: false,
+          });
+        }
+      } else {
         setAuthState({
           user: null,
           isAuthenticated: false,
           isLoading: false,
         });
       }
-    } else {
-      setAuthState({
-        user: null,
-        isAuthenticated: false,
-        isLoading: false,
-      });
     }
   }, []);
 
@@ -69,7 +72,9 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         isAuthenticated: true,
         isLoading: false,
       });
-      localStorage.setItem('life-app-user', JSON.stringify(user));
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('life-app-user', JSON.stringify(user));
+      }
       return true;
     }
     
@@ -101,7 +106,9 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       isAuthenticated: true,
       isLoading: false,
     });
-    localStorage.setItem('life-app-user', JSON.stringify(newUser));
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('life-app-user', JSON.stringify(newUser));
+    }
     return true;
   };
 
@@ -111,7 +118,9 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       isAuthenticated: false,
       isLoading: false,
     });
-    localStorage.removeItem('life-app-user');
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem('life-app-user');
+    }
   };
 
   const updateProfile = (data: ProfileUpdateData) => {
@@ -127,7 +136,9 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         ...authState,
         user: updatedUser,
       });
-      localStorage.setItem('life-app-user', JSON.stringify(updatedUser));
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('life-app-user', JSON.stringify(updatedUser));
+      }
     }
   };
 
