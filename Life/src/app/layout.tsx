@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import '../frontend/index.css';
 
 export const metadata: Metadata = {
   title: 'Life App',

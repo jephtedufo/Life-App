@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-import { HabitProvider } from './context/HabitContext';
-import { PointsProvider } from './context/PointsContext';
 import { CalendarPage } from './pages/CalendarPage';
 import { HabitsPage } from './pages/HabitsPage';
 import { PointsPage } from './pages/PointsPage';
@@ -23,13 +21,7 @@ function App() {
     }
   };
 
-  return (
-    <HabitProvider>
-      <PointsProvider>
-        {renderPage()}
-      </PointsProvider>
-    </HabitProvider>
-  );
+  return renderPage();
 }
 
 export default App;
