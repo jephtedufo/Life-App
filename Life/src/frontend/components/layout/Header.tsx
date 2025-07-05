@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Clock } from './Clock';
+import { useAuth } from '../../context/AuthContext';
 
 const bibleVerses = [
   "Be strong and of a good courage; be not afraid, neither be thou dismayed: for the Lord thy God is with thee whithersoever thou goest. - Joshua 1:9",
@@ -35,6 +36,7 @@ const bibleVerses = [
 ];
 
 export const Header: React.FC = () => {
+  const { user } = useAuth();
   const [verse, setVerse] = useState('');
 
   useEffect(() => {
@@ -67,7 +69,7 @@ export const Header: React.FC = () => {
   return (
     <div className="flex justify-between items-start mb-16 pt-8">
       <div className="flex-1 pr-8">
-        <h1 className="text-6xl font-bold text-gray-900 mb-6">Welcome Back, Jephte</h1>
+        <h1 className="text-6xl font-bold text-gray-900 mb-6">Welcome Back, {user?.firstName || 'User'}</h1>
         <p className="text-lg text-gray-600 leading-relaxed italic max-w-4xl">
           {verse}
         </p>

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { CalendarPage } from './pages/CalendarPage';
 import { HabitsPage } from './pages/HabitsPage';
 import { PointsPage } from './pages/PointsPage';
+import { Navigation } from './components/layout/Navigation';
 
 type Page = 'calendar' | 'habits' | 'points';
 
@@ -21,7 +22,12 @@ function App() {
     }
   };
 
-  return renderPage();
+  return (
+    <div className="pb-20">
+      {renderPage()}
+      <Navigation currentPage={currentPage} onNavigate={setCurrentPage} />
+    </div>
+  );
 }
 
 export default App;
