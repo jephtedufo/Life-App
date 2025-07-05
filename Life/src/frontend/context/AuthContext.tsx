@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { User, AuthState, LoginCredentials, SignupCredentials, ProfileUpdateData } from '../types/auth';
+import { authService } from '../../lib/supabase-auth';
 
 interface AuthContextType extends AuthState {
   login: (credentials: LoginCredentials) => Promise<boolean>;
@@ -10,16 +11,6 @@ interface AuthContextType extends AuthState {
 
 const AuthContext = createContext<AuthContextType | null>(null);
 
-// Mock user database (in real app, this would be a backend)
-const mockUsers: User[] = [
-  {
-    id: '1',
-    firstName: 'Jephte',
-    lastName: 'User',
-    email: 'jephte@example.com',
-  }
-];
-
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [authState, setAuthState] = useState<AuthState>({
     user: null,
@@ -27,117 +18,165 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     isLoading: true,
   });
 
-  // Load user from localStorage on mount
+  // Load user from Supabase on mount
   useEffect(() => {
-    // Only run on client side
-    if (typeof window !== 'undefined') {
-      const savedUser = localStorage.getItem('life-app-user');
-      if (savedUser) {
-        try {
-          const user = JSON.parse(savedUser);
+    const loadUser = async () => {
+      try {
+        const { user, error } = await authService.getCurrentUser();
+        if (user && !error) {
+          // Transform Supabase user to our User type
+          const transformedUser: User = {
+            id: user.id,
+            firstName: user.first_name,
+            lastName: user.last_name,
+            email: user.email,
+            profilePicture: user.profile_picture,
+          };
+          
           setAuthState({
-            user,
+            user: transformedUser,
             isAuthenticated: true,
             isLoading: false,
           });
-        } catch (error) {
-          console.error('Error parsing saved user:', error);
-          localStorage.removeItem('life-app-user');
+          
+          if (typeof window !== 'undefined') {
+            localStorage.setItem('life-app-user', JSON.stringify(transformedUser));
+          }
+        } else {
           setAuthState({
             user: null,
             isAuthenticated: false,
             isLoading: false,
           });
         }
-      } else {
+      } catch (error) {
+        console.error('Error loading user:', error);
         setAuthState({
           user: null,
           isAuthenticated: false,
           isLoading: false,
         });
       }
-    }
+    };
+
+    loadUser();
   }, []);
 
   const login = async (credentials: LoginCredentials): Promise<boolean> => {
-    // Simulate API call delay
-    await new Promise(resolve => setTimeout(resolve, 500));
-
-    const user = mockUsers.find(u => u.email === credentials.email);
-    
-    if (user) {
-      // In a real app, you'd verify the password here
-      setAuthState({
-        user,
-        isAuthenticated: true,
-        isLoading: false,
-      });
-      if (typeof window !== 'undefined') {
-        localStorage.setItem('life-app-user', JSON.stringify(user));
+    try {
+      const { user, error } = await authService.signIn(credentials.email, credentials.password);
+      
+      if (user && !error) {
+        // Transform Supabase user to our User type
+        const transformedUser: User = {
+          id: user.id,
+          firstName: user.first_name,
+          lastName: user.last_name,
+          email: user.email,
+          profilePicture: user.profile_picture,
+        };
+        
+        setAuthState({
+          user: transformedUser,
+          isAuthenticated: true,
+          isLoading: false,
+        });
+        
+        if (typeof window !== 'undefined') {
+          localStorage.setItem('life-app-user', JSON.stringify(transformedUser));
+        }
+        return true;
+      } else {
+        console.error('Login error:', error);
+        return false;
       }
-      return true;
+    } catch (error) {
+      console.error('Login error:', error);
+      return false;
     }
-    
-    return false;
   };
 
   const signup = async (credentials: SignupCredentials): Promise<boolean> => {
-    // Simulate API call delay
-    await new Promise(resolve => setTimeout(resolve, 500));
-
-    // Check if user already exists
-    const existingUser = mockUsers.find(u => u.email === credentials.email);
-    if (existingUser) {
+    try {
+      const { user, error } = await authService.signUp(
+        credentials.email,
+        credentials.password,
+        credentials.firstName,
+        credentials.lastName
+      );
+      
+      if (user && !error) {
+        // Transform Supabase user to our User type
+        const transformedUser: User = {
+          id: user.id,
+          firstName: credentials.firstName,
+          lastName: credentials.lastName,
+          email: credentials.email,
+        };
+        
+        setAuthState({
+          user: transformedUser,
+          isAuthenticated: true,
+          isLoading: false,
+        });
+        
+        if (typeof window !== 'undefined') {
+          localStorage.setItem('life-app-user', JSON.stringify(transformedUser));
+        }
+        return true;
+      } else {
+        console.error('Signup error:', error);
+        return false;
+      }
+    } catch (error) {
+      console.error('Signup error:', error);
       return false;
     }
-
-    // Create new user
-    const newUser: User = {
-      id: (mockUsers.length + 1).toString(),
-      firstName: credentials.firstName,
-      lastName: credentials.lastName,
-      email: credentials.email,
-    };
-
-    mockUsers.push(newUser);
-
-    setAuthState({
-      user: newUser,
-      isAuthenticated: true,
-      isLoading: false,
-    });
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('life-app-user', JSON.stringify(newUser));
-    }
-    return true;
   };
 
-  const logout = () => {
-    setAuthState({
-      user: null,
-      isAuthenticated: false,
-      isLoading: false,
-    });
-    if (typeof window !== 'undefined') {
-      localStorage.removeItem('life-app-user');
-    }
-  };
-
-  const updateProfile = (data: ProfileUpdateData) => {
-    if (authState.user) {
-      const updatedUser = {
-        ...authState.user,
-        firstName: data.firstName,
-        lastName: data.lastName,
-        profilePicture: data.profilePicture,
-      };
-
+  const logout = async () => {
+    try {
+      await authService.signOut();
+    } catch (error) {
+      console.error('Logout error:', error);
+    } finally {
       setAuthState({
-        ...authState,
-        user: updatedUser,
+        user: null,
+        isAuthenticated: false,
+        isLoading: false,
       });
       if (typeof window !== 'undefined') {
-        localStorage.setItem('life-app-user', JSON.stringify(updatedUser));
+        localStorage.removeItem('life-app-user');
+      }
+    }
+  };
+
+  const updateProfile = async (data: ProfileUpdateData) => {
+    if (authState.user) {
+      try {
+        await authService.updateProfile(authState.user.id, {
+          first_name: data.firstName,
+          last_name: data.lastName,
+          profile_picture: data.profilePicture,
+        });
+
+        const updatedUser = {
+          ...authState.user,
+          firstName: data.firstName,
+          lastName: data.lastName,
+          profilePicture: data.profilePicture,
+        };
+
+        setAuthState({
+          ...authState,
+          user: updatedUser,
+        });
+        
+        if (typeof window !== 'undefined') {
+          localStorage.setItem('life-app-user', JSON.stringify(updatedUser));
+        }
+      } catch (error) {
+        console.error('Profile update error:', error);
       }
     }
   };
