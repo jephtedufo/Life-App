@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHabits } from '../../context/HabitContext';
-import { Settings, Edit3, Calendar, CheckSquare, Trophy } from 'lucide-react';
+import { Settings, Edit3, Calendar, CheckSquare, Trophy, User } from 'lucide-react';
 import { ConfirmDialog } from '../ui/ConfirmDialog';
 import { HabitConfigModal } from './HabitConfigModal';
 import { SettingsModal } from '../modals/SettingsModal';
 import { PointsModal } from '../points/PointsModal';
+import { ProfileModal } from '../modals/ProfileModal';
+import supabase from '../../../../lib/supabaseclient';
 
 interface AddHabitFormProps {
   onNavigate: (page: 'calendar' | 'habits' | 'points') => void;
@@ -16,6 +18,8 @@ export const AddHabitForm: React.FC<AddHabitFormProps> = ({ onNavigate }) => {
   const [showPointsModal, setShowPointsModal] = useState(false);
   const [showResetConfirm, setShowResetConfirm] = useState(false);
   const [showHabitConfig, setShowHabitConfig] = useState(false);
+  const [showProfileModal, setShowProfileModal] = useState(false);
+  const [userProfile, setUserProfile] = useState<{ first_name: string; last_name: string; profile_picture?: string } | null>(null);
 
   const handleAddHabit = (name: string, description: string, repeatDays: number[]) => {
     addHabit(name, description, repeatDays);
@@ -24,6 +28,30 @@ export const AddHabitForm: React.FC<AddHabitFormProps> = ({ onNavigate }) => {
   const handleResetData = () => {
     setShowResetConfirm(true);
   };
+
+  // Load user profile for profile button
+  useEffect(() => {
+    const loadUserProfile = async () => {
+      try {
+        const { data: { user } } = await supabase.auth.getUser();
+        if (user) {
+          const { data: profileData } = await supabase
+            .from('users')
+            .select('first_name, last_name, profile_picture')
+            .eq('id', user.id)
+            .single();
+          
+          if (profileData) {
+            setUserProfile(profileData);
+          }
+        }
+      } catch (error) {
+        console.error('Error loading user profile:', error);
+      }
+    };
+
+    loadUserProfile();
+  }, []);
 
   return (
     <>
@@ -68,6 +96,23 @@ export const AddHabitForm: React.FC<AddHabitFormProps> = ({ onNavigate }) => {
             aria-label="Settings"
           >
             <Settings size={20} />
+          </button>
+          
+          {/* Profile Button */}
+          <button
+            onClick={() => setShowProfileModal(true)}
+            className="w-12 h-12 bg-gray-900 text-white rounded-lg hover:bg-gray-800 transition-colors flex items-center justify-center overflow-hidden"
+            aria-label="Profile"
+          >
+            {userProfile?.profile_picture ? (
+              <img
+                src={userProfile.profile_picture}
+                alt={`${userProfile.first_name} ${userProfile.last_name}`}
+                className="w-full h-full object-cover"
+              />
+            ) : (
+              <User size={20} />
+            )}
           </button>
         </div>
 
@@ -117,6 +162,12 @@ export const AddHabitForm: React.FC<AddHabitFormProps> = ({ onNavigate }) => {
         }}
         title="Reset All Data"
         message="Are you sure you want to reset all habit data? This action cannot be undone."
+      />
+
+      {/* Profile Modal */}
+      <ProfileModal
+        isOpen={showProfileModal}
+        onClose={() => setShowProfileModal(false)}
       />
     </>
   );

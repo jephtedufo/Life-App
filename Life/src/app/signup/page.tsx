@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import supabase from '../../../../lib/supabaseclient';
+import supabase from '../../../lib/supabaseclient';
 
 export default function SignupPage() {
   const router = useRouter();
@@ -29,6 +29,11 @@ export default function SignupPage() {
     setError('');
 
     try {
+      // Check if Supabase is properly configured
+      if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
+        throw new Error('Supabase configuration is missing. Please check your environment variables.');
+      }
+
       // Validate form data
       if (!formData.firstName.trim() || !formData.lastName.trim() || !formData.email.trim() || !formData.password.trim()) {
         throw new Error('All fields are required');
@@ -38,6 +43,14 @@ export default function SignupPage() {
         throw new Error('Password must be at least 6 characters long');
       }
 
+      // Email validation
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(formData.email)) {
+        throw new Error('Please enter a valid email address');
+      }
+
+      console.log('Attempting to sign up user:', formData.email);
+
       // Sign up the user with Supabase Auth
       const { data: authData, error: authError } = await supabase.auth.signUp({
         email: formData.email,
@@ -45,12 +58,15 @@ export default function SignupPage() {
       });
 
       if (authError) {
+        console.error('Supabase auth error:', authError);
         throw new Error(authError.message);
       }
 
       if (!authData.user) {
         throw new Error('Failed to create user account');
       }
+
+      console.log('User created successfully:', authData.user.id);
 
       // Insert user data into the users table
       const { error: insertError } = await supabase
@@ -63,15 +79,19 @@ export default function SignupPage() {
         });
 
       if (insertError) {
+        console.error('Database insert error:', insertError);
         // If user data insertion fails, we should clean up the auth user
         // For now, we'll just throw the error
         throw new Error(`Failed to save user data: ${insertError.message}`);
       }
 
+      console.log('User data saved successfully');
+
       // Success! Redirect to calendar page
       router.push('/app');
       
     } catch (err) {
+      console.error('Signup error:', err);
       setError(err instanceof Error ? err.message : 'An unexpected error occurred');
     } finally {
       setLoading(false);
