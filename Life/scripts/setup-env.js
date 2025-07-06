@@ -8,41 +8,45 @@
 const fs = require('fs');
 const path = require('path');
 
-console.log('🚀 Life App Environment Setup\n');
+console.log('🔧 Setting up environment variables for Life App...\n');
 
 // Check if .env.local already exists
 const envPath = path.join(process.cwd(), '.env.local');
-if (fs.existsSync(envPath)) {
-  console.log('⚠️  .env.local already exists!');
-  console.log('Please check if your Supabase credentials are correct.\n');
-  
-  const envContent = fs.readFileSync(envPath, 'utf8');
-  const hasSupabaseUrl = envContent.includes('NEXT_PUBLIC_SUPABASE_URL');
-  const hasSupabaseKey = envContent.includes('NEXT_PUBLIC_SUPABASE_ANON_KEY');
-  
-  if (hasSupabaseUrl && hasSupabaseKey) {
-    console.log('✅ Supabase environment variables are configured');
-  } else {
-    console.log('❌ Missing Supabase environment variables');
-  }
+const envExists = fs.existsSync(envPath);
+
+if (envExists) {
+  console.log('⚠️  .env.local already exists. Please update it manually with your Supabase credentials.');
+  console.log('📁 File location:', envPath);
 } else {
-  console.log('📝 Creating .env.local file...');
-  
-  const envTemplate = `# Supabase Configuration
-# Get these values from your Supabase project dashboard
-# Settings > API > Project URL and anon public key
+  // Create .env.local template
+  const envContent = `# Supabase Configuration
+# Replace these with your actual Supabase project credentials
+# Get these from: https://supabase.com/dashboard/project/[YOUR-PROJECT-ID]/settings/api
 
 NEXT_PUBLIC_SUPABASE_URL=https://your-project-id.supabase.co
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your_anon_key_here
 
-# Optional: Enable debug logging
-# NEXT_PUBLIC_DEBUG=true
+# Instructions:
+# 1. Go to your Supabase Dashboard
+# 2. Select your project
+# 3. Go to Settings > API
+# 4. Copy the "Project URL" and "anon public" key
+# 5. Replace the values above
 `;
 
-  fs.writeFileSync(envPath, envTemplate);
-  console.log('✅ Created .env.local file');
-  console.log('📋 Please update the file with your actual Supabase credentials');
+  fs.writeFileSync(envPath, envContent);
+  console.log('✅ Created .env.local template');
+  console.log('📁 File location:', envPath);
 }
+
+console.log('\n📋 Next steps:');
+console.log('1. Go to your Supabase Dashboard: https://supabase.com/dashboard');
+console.log('2. Select your project');
+console.log('3. Go to Settings > API');
+console.log('4. Copy the "Project URL" and "anon public" key');
+console.log('5. Update .env.local with your actual credentials');
+console.log('6. Run the database setup script in Supabase SQL Editor');
+console.log('7. Restart your development server: npm run dev');
 
 console.log('\n📚 Next Steps:');
 console.log('1. Go to your Supabase Dashboard');
