@@ -96,9 +96,22 @@ export default function SignupPage() {
           hint: insertError.hint
         });
         
-        // If user data insertion fails, we should clean up the auth user
-        // For now, we'll just throw the error
-        throw new Error(`Failed to save user data: ${insertError.message}`);
+        // Provide specific error messages based on error codes
+        let errorMessage = 'Failed to save user data. ';
+        
+        if (insertError.code === '42P01') {
+          errorMessage += 'The users table does not exist. Please run the database setup script in your Supabase SQL Editor.';
+        } else if (insertError.code === '42501') {
+          errorMessage += 'Permission denied. Please check your Row Level Security policies.';
+        } else if (insertError.code === '23505') {
+          errorMessage += 'A user with this email already exists.';
+        } else if (insertError.code === '23502') {
+          errorMessage += 'Missing required fields. Please check your database schema.';
+        } else {
+          errorMessage += insertError.message;
+        }
+        
+        throw new Error(errorMessage);
       }
 
       console.log('User data inserted successfully:', insertData);
@@ -133,7 +146,13 @@ export default function SignupPage() {
             {/* Error Message */}
             {error && (
               <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-md text-sm">
-                {error}
+                <div className="font-medium">Signup Error</div>
+                <div className="mt-1">{error}</div>
+                {error.includes('users table does not exist') && (
+                  <div className="mt-2 text-xs">
+                    <strong>Quick Fix:</strong> Copy the contents of <code>database-setup.sql</code> and run it in your Supabase SQL Editor.
+                  </div>
+                )}
               </div>
             )}
 
