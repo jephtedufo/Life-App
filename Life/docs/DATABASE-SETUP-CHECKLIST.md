@@ -18,13 +18,13 @@ This checklist ensures your Supabase database is properly configured for the Lif
 - Click **New query**
 
 ### 1.3 Run Complete Setup Script
-Copy and paste the entire script from `database/complete-database-setup.sql`:
+Copy and paste the entire script from `database/fix-database-setup.sql` (recommended) or `database/complete-database-setup.sql`:
 
 ```sql
--- Complete Database Setup for Life App
--- Run this entire script in your Supabase SQL Editor
+-- Complete Database Fix Script for Life App
+-- Run this entire script in your Supabase SQL Editor to fix all setup issues
 
--- Drop existing table if it exists
+-- Step 1: Drop existing table if it exists and recreate it properly
 DROP TABLE IF EXISTS users CASCADE;
 
 -- Create the users table with all required columns
