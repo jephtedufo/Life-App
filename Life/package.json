@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "build:frontend": "vite build",
-    "dev:frontend": "vite"
+    "dev:frontend": "vite",
+    "setup": "node scripts/setup-env.js"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.50.3",

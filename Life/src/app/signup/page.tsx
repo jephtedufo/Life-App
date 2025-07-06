@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import supabase from '../../../lib/supabaseclient';
 
@@ -69,21 +69,39 @@ export default function SignupPage() {
       console.log('User created successfully:', authData.user.id);
 
       // Insert user data into the users table
-      const { error: insertError } = await supabase
+      console.log('Inserting user data:', {
+        id: authData.user.id,
+        first_name: formData.firstName.trim(),
+        last_name: formData.lastName.trim(),
+        email: formData.email.trim(),
+      });
+
+      const { data: insertData, error: insertError } = await supabase
         .from('users')
         .insert({
           id: authData.user.id,
           first_name: formData.firstName.trim(),
           last_name: formData.lastName.trim(),
           email: formData.email.trim(),
-        });
+        })
+        .select()
+        .single();
 
       if (insertError) {
         console.error('Database insert error:', insertError);
+        console.error('Error details:', {
+          code: insertError.code,
+          message: insertError.message,
+          details: insertError.details,
+          hint: insertError.hint
+        });
+        
         // If user data insertion fails, we should clean up the auth user
         // For now, we'll just throw the error
         throw new Error(`Failed to save user data: ${insertError.message}`);
       }
+
+      console.log('User data inserted successfully:', insertData);
 
       console.log('User data saved successfully');
 

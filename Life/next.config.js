@@ -1,21 +1,19 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  typescript: {
-    ignoreBuildErrors: true,
+  experimental: {
+    appDir: true,
   },
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
-  // Handle static files from frontend
-  async rewrites() {
-    return [
+  images: {
+    domains: ['localhost', 'your-project-id.supabase.co'],
+    remotePatterns: [
       {
-        source: '/app/:path*',
-        destination: '/app',
+        protocol: 'https',
+        hostname: '*.supabase.co',
+        port: '',
+        pathname: '/storage/v1/object/public/**',
       },
-    ];
+    ],
   },
-  // Copy frontend build files to public
   async headers() {
     return [
       {
@@ -28,9 +26,6 @@ const nextConfig = {
       },
     ];
   },
-  // Optimize for Vercel
-  output: 'standalone',
-  poweredByHeader: false,
-};
+}
 
-module.exports = nextConfig; 
+module.exports = nextConfig 

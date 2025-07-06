@@ -13,43 +13,61 @@ NEXT_PUBLIC_SUPABASE_URL=https://your-project-id.supabase.co
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your_anon_key_here
 ```
 
-### 2. **Database Table Missing**
+### 2. **Database Table Missing or Incorrect**
 **Error**: "Failed to save user data"
 
 **Solution**:
 1. Go to your Supabase Dashboard
 2. Navigate to **SQL Editor**
-3. Run this SQL to create the users table:
+3. Run the complete database setup script from `database/complete-database-setup.sql`
+4. Or run this SQL to create the users table properly:
+
 ```sql
-CREATE TABLE IF NOT EXISTS users (
+-- Drop existing table if it exists
+DROP TABLE IF EXISTS users CASCADE;
+
+-- Create the users table with all required columns
+CREATE TABLE users (
   id UUID PRIMARY KEY DEFAULT auth.uid(),
-  first_name TEXT,
-  last_name TEXT,
-  email TEXT,
+  first_name TEXT NOT NULL,
+  last_name TEXT NOT NULL,
+  email TEXT NOT NULL,
   profile_picture TEXT,
   phone TEXT,
   location TEXT,
   bio TEXT,
   date_of_birth DATE,
   timezone TEXT DEFAULT 'Africa/Nairobi',
-  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
--- Enable RLS
+-- Enable Row Level Security
 ALTER TABLE users ENABLE ROW LEVEL SECURITY;
 
--- Policy to allow users to read their own data
+-- Create policies for secure access
 CREATE POLICY "Users can view own profile" ON users
   FOR SELECT USING (auth.uid() = id);
 
--- Policy to allow users to insert their own data
 CREATE POLICY "Users can insert own profile" ON users
   FOR INSERT WITH CHECK (auth.uid() = id);
 
--- Policy to allow users to update their own data
 CREATE POLICY "Users can update own profile" ON users
   FOR UPDATE USING (auth.uid() = id);
+
+CREATE POLICY "Users can delete own profile" ON users
+  FOR DELETE USING (auth.uid() = id);
+
+-- Grant permissions
+GRANT ALL ON users TO authenticated;
+GRANT ALL ON users TO service_role;
 ```
+
+**Common Database Errors:**
+- **"relation 'users' does not exist"** - Table not created
+- **"permission denied"** - RLS policies not set up correctly
+- **"duplicate key value violates unique constraint"** - User already exists
+- **"null value in column violates not-null constraint"** - Missing required fields
 
 ### 3. **Email Already Exists**
 **Error**: "User already registered"
@@ -110,6 +128,8 @@ console.log('Supabase Key:', process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY);
 1. Go to Supabase Dashboard > SQL Editor
 2. Run: `SELECT * FROM users LIMIT 1;`
 3. If this fails, the table doesn't exist
+4. Run the `database/database-test.sql` script to verify your setup
+5. Check the browser console for detailed error messages
 
 ### 4. **Check Authentication Settings**
 1. Go to Supabase Dashboard > Authentication > Settings
