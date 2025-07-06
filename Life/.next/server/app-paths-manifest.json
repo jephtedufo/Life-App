@@ -1,0 +1,10 @@
+{
+  "/_not-found": "app/_not-found.js",
+  "/api/habits/route": "app/api/habits/route.js",
+  "/api/hello/route": "app/api/hello/route.js",
+  "/api/points/route": "app/api/points/route.js",
+  "/app/page": "app/app/page.js",
+  "/login/page": "app/login/page.js",
+  "/page": "app/page.js",
+  "/signup/page": "app/signup/page.js"
+}
