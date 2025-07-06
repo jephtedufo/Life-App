@@ -18,7 +18,7 @@ This checklist ensures your Supabase database is properly configured for the Lif
 - Click **New query**
 
 ### 1.3 Run Complete Setup Script
-Copy and paste the entire script from `database/fix-database-setup.sql` (recommended) or `database/complete-database-setup.sql`:
+Copy and paste the entire script from `database/complete-database-setup.sql`:
 
 ```sql
 -- Complete Database Fix Script for Life App
