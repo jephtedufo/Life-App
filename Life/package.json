@@ -6,10 +6,7 @@
     "dev": "next dev -p 3001",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "build:frontend": "vite build",
-    "dev:frontend": "vite",
-    "setup": "node scripts/setup-env.js"
+    "lint": "next lint"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.50.3",
@@ -23,11 +20,9 @@
     "@types/node": "^20.11.0",
     "@types/react": "^18.3.5",
     "@types/react-dom": "^18.3.0",
-    "@vitejs/plugin-react": "^4.3.1",
     "autoprefixer": "^10.4.18",
     "postcss": "^8.4.35",
     "tailwindcss": "^3.4.1",
-    "typescript": "^5.3.3",
-    "vite": "^5.4.2"
+    "typescript": "^5.3.3"
   }
 }
