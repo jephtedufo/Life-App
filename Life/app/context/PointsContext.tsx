@@ -1,3 +1,5 @@
+"use client";
+
 import React, { createContext, useContext, useCallback } from 'react';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 import { TaskCategory, PointLog, Reward, RedemptionLog, PointsGoal, HabitTaskConnection } from '../types';

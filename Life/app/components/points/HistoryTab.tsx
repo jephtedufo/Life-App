@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState } from 'react';
 import { usePoints } from '../../context/PointsContext';
 import { Trash2, Plus, Minus, Calendar, Filter } from 'lucide-react';

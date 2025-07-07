@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState } from 'react';
 import { DayCell } from './DayCell';
 import { getDaysInMonth, getMonthName } from '../utils/dateUtils';

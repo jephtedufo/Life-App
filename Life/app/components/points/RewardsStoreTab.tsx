@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState } from 'react';
 import { usePoints } from '../../context/PointsContext';
 import { Plus, Edit2, Trash2, Gift, ShoppingCart } from 'lucide-react';

@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState } from 'react';
 import { X, Download, FileText, Database, Calendar, Trophy, Target, Link2 } from 'lucide-react';
 import { usePoints } from '../../context/PointsContext';

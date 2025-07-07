@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState } from 'react';
 import { useHabits } from '../context/HabitContext';
 import { Edit2, Trash2, Check, X, X as CloseIcon, Save } from 'lucide-react';

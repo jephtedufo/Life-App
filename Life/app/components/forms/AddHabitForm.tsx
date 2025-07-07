@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState } from 'react';
 import { useHabits } from '../../context/HabitContext';
 import { Settings, Edit3, Calendar, CheckSquare, Trophy } from 'lucide-react';

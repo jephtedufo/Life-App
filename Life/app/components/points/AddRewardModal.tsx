@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState, useRef } from 'react';
 import { X, Upload, Image as ImageIcon } from 'lucide-react';
 import { usePoints } from '../../context/PointsContext';

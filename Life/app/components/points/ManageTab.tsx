@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState } from 'react';
 import { usePoints } from '../../context/PointsContext';
 import { Edit2, Trash2, Plus, Gift, Eye, EyeOff, ChevronUp, ChevronDown } from 'lucide-react';
