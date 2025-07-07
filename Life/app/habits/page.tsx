@@ -1,8 +1,9 @@
+"use client";
 import React, { useState } from 'react';
-import { Navigation } from '../components/layout/Navigation';
+import { Navigation } from '../.components/layout/Navigation';
 // Import habits and stats components if available
 // import HabitsList from '../components/HabitsList'; // Placeholder
-import { Statistics } from '../components/Statistics';
+import { Statistics } from '../.components/Statistics';
 
 export default function HabitsManagerPage() {
   const [page, setPage] = useState<'calendar' | 'habits' | 'points'>('habits');
