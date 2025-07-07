@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { DayCell } from './DayCell';
-import { getDaysInMonth, getMonthName } from '../utils/dateUtils';
-import { useHabits } from '../context/HabitContext';
+import { getDaysInMonth, getMonthName } from '../.config/utils/dateUtils';
+import { useHabits } from '../.config/context/HabitContext';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 interface CalendarProps {

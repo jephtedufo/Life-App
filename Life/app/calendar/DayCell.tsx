@@ -1,9 +1,9 @@
 import React from 'react';
 import { Check, X } from 'lucide-react';
-import { Habit, HabitStatus } from '../types';
-import { useHabits } from '../context/HabitContext';
-import { usePoints } from '../context/PointsContext';
-import { isToday, isPastDate } from '../utils/dateUtils';
+import { Habit, HabitStatus } from '../.config/types';
+import { useHabits } from '../.config/context/HabitContext';
+import { usePoints } from '../.config/context/PointsContext';
+import { isToday, isPastDate } from '../.config/utils/dateUtils';
 
 interface DayCellProps {
   date: Date;
