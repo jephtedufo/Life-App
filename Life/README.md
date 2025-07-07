@@ -15,7 +15,7 @@ A beautiful, production-ready habit tracking application built with React, TypeS
 ## 📁 Project Structure
 
 ```
-src/
+app/
 ├── components/          # React components
 │   ├── ui/             # Reusable UI components
 │   ├── forms/          # Form-related components
@@ -86,19 +86,19 @@ assets/                 # Static assets (images, icons)
 ## 🗂️ Important File Locations
 
 ### Core Application Files
-- `src/App.tsx` - Main application component
-- `src/main.tsx` - Application entry point
-- `src/index.css` - Global styles and Tailwind imports
+- `app/App.tsx` - Main application component
+- `app/main.tsx` - Application entry point
+- `app/index.css` - Global styles and Tailwind imports
 
 ### Components
-- `src/components/Calendar.tsx` - Monthly calendar view
-- `src/components/Statistics.tsx` - Habits management and statistics
-- `src/components/Header.tsx` - Application header with clock and verse
-- `src/components/DayCell.tsx` - Individual calendar day component
+- `app/components/Calendar.tsx` - Monthly calendar view
+- `app/components/Statistics.tsx` - Habits management and statistics
+- `app/components/Header.tsx` - Application header with clock and verse
+- `app/components/DayCell.tsx` - Individual calendar day component
 
 ### State Management
-- `src/context/HabitContext.tsx` - Global habit state management
-- `src/hooks/useLocalStorage.ts` - Local storage persistence hook
+- `app/context/HabitContext.tsx` - Global habit state management
+- `app/hooks/useLocalStorage.ts` - Local storage persistence hook
 
 ### Configuration
 - `tailwind.config.js` - Tailwind CSS configuration
