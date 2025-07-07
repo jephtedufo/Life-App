@@ -1,2 +1,5 @@
 node_modules/
 .next/
+node_modules/react/cjs
+node_modules/react-dom/cjs
+node_modules/scheduler/cjs
