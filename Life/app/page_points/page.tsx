@@ -1,8 +1,8 @@
 "use client";
 import React, { useState } from 'react';
-import { Navigation } from '../.components/layout/Navigation';
+import { Navigation } from '../components/layout/Navigation';
 import { PointsSystem } from './PointsSystem';
-import { Statistics } from '../.components/Statistics';
+import { Statistics } from '../components/Statistics';
 
 export default function PointsPage() {
   const [page, setPage] = useState<'calendar' | 'habits' | 'points'>('points');

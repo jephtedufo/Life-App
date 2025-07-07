@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from 'react';
-import { Navigation } from '../.components/layout/Navigation';
-import { Calendar } from '../calendar/Calendar';
+import { Navigation } from '../components/layout/Navigation';
+import { Calendar } from '../page_calendar/Calendar';
 
 export default function CalendarPage() {
   const [page, setPage] = useState<'calendar' | 'habits' | 'points'>('calendar');
