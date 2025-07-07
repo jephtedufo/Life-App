@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { X, Upload } from 'lucide-react';
-import { usePoints } from '../../context/PointsContext';
+import { usePoints } from '../../config/context/PointsContext';
 
 interface AddRewardModalProps {
   isOpen: boolean;

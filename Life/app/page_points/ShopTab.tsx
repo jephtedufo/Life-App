@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { usePoints } from '../../context/PointsContext';
+import { usePoints } from '../../config/context/PointsContext';
 import { ShoppingBag } from 'lucide-react';
 import { AddRewardModal } from './AddRewardModal';
 import { RedeemRewardModal } from './RedeemRewardModal';

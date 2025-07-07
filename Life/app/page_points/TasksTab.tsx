@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
-import { usePoints } from '../../context/PointsContext';
+import { usePoints } from '../../config/context/PointsContext';
 import { Plus, Minus, Edit2 } from 'lucide-react';
 import { AddTaskModal } from './AddTaskModal';
+import { TaskCategory } from '../../config/types';
 
 export const TasksTab: React.FC = () => {
   const { categories, addPointLog, updateCategory } = usePoints();
   const [editMode, setEditMode] = useState(false);
-  const [editingTask, setEditingTask] = useState<any>(null);
+  const [editingTask, setEditingTask] = useState<TaskCategory | null>(null);
 
   const handleAddPoints = (categoryId: string) => {
     const category = categories.find(c => c.id === categoryId);
@@ -22,19 +23,19 @@ export const TasksTab: React.FC = () => {
     }
   };
 
-  const handleEditTask = (task: any) => {
+  const handleEditTask = (task: TaskCategory) => {
     setEditingTask(task);
   };
 
   // Group tasks by color
-  const groupedTasks = categories.reduce((groups, task) => {
+  const groupedTasks: Record<string, TaskCategory[]> = categories.reduce((groups, task) => {
     const color = task.color;
     if (!groups[color]) {
       groups[color] = [];
     }
     groups[color].push(task);
     return groups;
-  }, {} as Record<string, typeof categories>);
+  }, {} as Record<string, TaskCategory[]>);
 
   return (
     <>
@@ -98,7 +99,7 @@ export const TasksTab: React.FC = () => {
                   {/* Tasks in this group - 2 column layout */}
                   <div className="p-4">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                      {tasks.map(task => (
+                      {tasks.map((task: TaskCategory) => (
                         <div 
                           key={task.id} 
                           className="relative rounded-xl border border-white/20 backdrop-blur-sm p-3 hover:shadow-md transition-all"

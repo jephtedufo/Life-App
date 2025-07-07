@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { usePoints } from '../../context/PointsContext';
+import { usePoints } from '../../config/context/PointsContext';
 import { Edit2, Trash2, Plus, Gift, Eye, EyeOff, ChevronUp, ChevronDown } from 'lucide-react';
 import { AddTaskModal } from './AddTaskModal';
 import { AddRewardModal } from './AddRewardModal';

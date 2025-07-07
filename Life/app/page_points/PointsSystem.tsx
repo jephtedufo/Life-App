@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { usePoints } from '../../context/PointsContext';
+import { usePoints } from '../../config/context/PointsContext';
 import { Link2, Target, History, ShoppingCart, Plus, TrendingUp, Settings, Edit2, Trash2 } from 'lucide-react';
 import { TasksTab } from './TasksTab';
 import { ShopTab } from './ShopTab';

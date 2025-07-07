@@ -1,6 +1,6 @@
 import React from 'react';
 import { X, Gift, AlertTriangle } from 'lucide-react';
-import { usePoints } from '../../context/PointsContext';
+import { usePoints } from '../../config/context/PointsContext';
 
 interface RedeemRewardModalProps {
   isOpen: boolean;

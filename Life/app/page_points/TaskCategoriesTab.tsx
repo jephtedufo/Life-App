@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { usePoints } from '../../context/PointsContext';
+import { usePoints } from '../../config/context/PointsContext';
 import { Plus, Edit2, Trash2, Minus } from 'lucide-react';
 import { AddCategoryModal } from './AddCategoryModal';
+import { TaskCategory } from '../../config/types';
 
 interface TaskCategoriesTabProps {
   hideAddButton?: boolean;
@@ -20,20 +21,20 @@ export const TaskCategoriesTab: React.FC<TaskCategoriesTabProps> = ({ hideAddBut
   };
 
   const handleAddPoints = (categoryId: string) => {
-    const category = categories.find(c => c.id === categoryId);
+    const category = categories.find((c: TaskCategory) => c.id === categoryId);
     if (category) {
       addPointLog(categoryId, 'Points added', 1, category.defaultPointValue);
     }
   };
 
   const handleRemovePoints = (categoryId: string) => {
-    const category = categories.find(c => c.id === categoryId);
+    const category = categories.find((c: TaskCategory) => c.id === categoryId);
     if (category) {
       addPointLog(categoryId, 'Points removed', 1, -category.defaultPointValue);
     }
   };
 
-  const getCategoryStats = (categoryId: string) => {
+  const getCategoryStats = (categoryId: string): { totalPoints: number; totalTasks: number } => {
     // This would be implemented in the context
     return { totalPoints: 0, totalTasks: 0 };
   };
@@ -113,7 +114,7 @@ export const TaskCategoriesTab: React.FC<TaskCategoriesTabProps> = ({ hideAddBut
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {categories.map(category => {
+            {categories.map((category: TaskCategory) => {
               const stats = getCategoryStats(category.id);
 
               return (

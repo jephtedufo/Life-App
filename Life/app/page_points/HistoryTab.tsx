@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { usePoints } from '../../context/PointsContext';
+import { usePoints } from '../../config/context/PointsContext';
 import { Trash2, Plus, Minus, Calendar, Filter } from 'lucide-react';
 
 export const HistoryTab: React.FC = () => {
