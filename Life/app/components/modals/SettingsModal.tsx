@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { X, Edit3, RefreshCw, Download, Clock, Trophy, Grid3X3 } from 'lucide-react';
 import { ToggleSwitch } from '../ui/ToggleSwitch';
 import { ImportExportModal } from './ImportExportModal';
-import { useHabits } from '../../config/context/HabitContext';
-import { usePoints } from '../../config/context/PointsContext';
+import { useHabits } from '../../context/HabitContext';
+import { usePoints } from '../../context/PointsContext';
 
 interface SettingsModalProps {
   isOpen: boolean;

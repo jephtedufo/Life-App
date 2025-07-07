@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { X, Download, Upload, AlertTriangle, CheckCircle, FileText, AlertCircle } from 'lucide-react';
-import { useHabits } from '../../config/context/HabitContext';
-import { downloadCSV, parseCSV, detectConflicts, mergeData, CSVImportResult, DataConflict } from '../../config/utils/csvUtils';
+import { useHabits } from '../../context/HabitContext';
+import { downloadCSV, parseCSV, detectConflicts, mergeData, CSVImportResult, DataConflict } from '../../utils/csvUtils';
 
 interface ImportExportModalProps {
   isOpen: boolean;
