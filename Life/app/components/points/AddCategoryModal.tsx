@@ -31,7 +31,7 @@ export const AddCategoryModal: React.FC<AddCategoryModalProps> = ({
 
   const handleSubmit = () => {
     if (name.trim()) {
-      addCategory(name.trim(), categoryAmount, selectedColor);
+      addCategory(name.trim(), '', categoryAmount, selectedColor);
       setName('');
       setCategoryAmount(10);
       setSelectedColor(categoryColors[0]);
