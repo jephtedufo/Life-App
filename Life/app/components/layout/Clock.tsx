@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useHabits } from '../../context/HabitContext';
+import { useHabits } from '../../config/context/HabitContext';
 
 export const Clock: React.FC = () => {
   const [time, setTime] = useState(new Date());

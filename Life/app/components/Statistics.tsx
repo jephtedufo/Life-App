@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { useHabits } from '../.config/context/HabitContext';
+import { useHabits } from '../config/context/HabitContext';
 import { Edit2, Trash2, Check, X, X as CloseIcon, Save } from 'lucide-react';
-import { isToday } from '../.config/utils/dateUtils';
+import { isToday } from '../config/utils/dateUtils';
 
 interface StatisticsProps {
   hideTitle?: boolean;

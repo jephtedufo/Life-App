@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { usePoints } from '../../context/PointsContext';
-import { useHabits } from '../../context/HabitContext';
+import { usePoints } from '../../config/context/PointsContext';
+import { useHabits } from '../../config/context/HabitContext';
 import { Settings, Edit3, Calendar, CheckSquare, Trophy } from 'lucide-react';
-import { ConfirmDialog } from '../ui/ConfirmDialog';
-import { AddTaskModal } from '../points/AddTaskModal';
-import { SettingsModal } from '../modals/SettingsModal';
+import { ConfirmDialog } from '../../components/ui/ConfirmDialog';
+import { AddTaskModal } from '../page_points/AddTaskModal';
+import { SettingsModal } from '../components/modals/SettingsModal';
 
 interface AddCategoryFormProps {
   onNavigate: (page: 'calendar' | 'habits' | 'points') => void;
