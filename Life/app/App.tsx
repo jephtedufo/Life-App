@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { HabitProvider } from './context/HabitContext';
-import { PointsProvider } from './context/PointsContext';
-import { CalendarPage } from './pages/CalendarPage';
-import { HabitsPage } from './pages/HabitsPage';
-import { PointsPage } from './pages/PointsPage';
+import { HabitProvider } from './pageHabits/HabitContext';
+import { PointsProvider } from './pagePoints/PointsContext';
+import { CalendarPage } from './pageCalendar/CalendarPage';
+import { HabitsPage } from './pageHabits/HabitsPage';
+import { PointsPage } from './pagePoints/PointsPage';
 
 type Page = 'calendar' | 'habits' | 'points';
 
