@@ -4,6 +4,8 @@ import { useHabits } from '../pageHabits/HabitContext';
 import { Settings, Edit3, Calendar, CheckSquare, Trophy, Download } from 'lucide-react';
 import { ConfirmDialog } from '../allComponents/ConfirmDialog';
 import { AddTaskModal } from './components/AddTaskModal';
+import { AddRewardModal } from './components/AddRewardModal';
+import { AddGoalModal } from './components/AddGoalModal';
 import { SettingsModal } from '../allComponents/SettingsModal';
 
 interface AddCategoryFormProps {
@@ -16,6 +18,8 @@ export const AddCategoryForm: React.FC<AddCategoryFormProps> = ({ onNavigate }) 
   const [showSettingsModal, setShowSettingsModal] = useState(false);
   const [showResetConfirm, setShowResetConfirm] = useState(false);
   const [showTaskModal, setShowTaskModal] = useState(false);
+  const [showRewardModal, setShowRewardModal] = useState(false);
+  const [showGoalModal, setShowGoalModal] = useState(false);
 
   const handleResetData = () => {
     setShowResetConfirm(true);
@@ -30,6 +34,18 @@ export const AddCategoryForm: React.FC<AddCategoryFormProps> = ({ onNavigate }) 
             className="flex-1 px-4 py-3 border-2 border-dashed border-gray-300 rounded-lg hover:border-gray-400 hover:bg-gray-50 transition-all text-gray-600 text-left"
           >
             Add new task...
+          </button>
+          <button
+            onClick={() => setShowRewardModal(true)}
+            className="flex-1 px-4 py-3 border-2 border-dashed border-gray-300 rounded-lg hover:border-gray-400 hover:bg-gray-50 transition-all text-gray-600 text-left"
+          >
+            Add new reward...
+          </button>
+          <button
+            onClick={() => setShowGoalModal(true)}
+            className="flex-1 px-4 py-3 border-2 border-dashed border-gray-300 rounded-lg hover:border-gray-400 hover:bg-gray-50 transition-all text-gray-600 text-left"
+          >
+            Add new goal...
           </button>
           
           {/* Navigation Icons */}
@@ -93,6 +109,16 @@ export const AddCategoryForm: React.FC<AddCategoryFormProps> = ({ onNavigate }) 
       <AddTaskModal
         isOpen={showTaskModal}
         onClose={() => setShowTaskModal(false)}
+      />
+      {/* Reward Modal */}
+      <AddRewardModal
+        isOpen={showRewardModal}
+        onClose={() => setShowRewardModal(false)}
+      />
+      {/* Goal Modal */}
+      <AddGoalModal
+        isOpen={showGoalModal}
+        onClose={() => setShowGoalModal(false)}
       />
 
       {/* Settings Modal */}

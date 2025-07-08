@@ -36,27 +36,25 @@ export const TasksTab: React.FC = () => {
     return groups;
   }, {} as Record<string, typeof categories>);
 
+  // Split into two columns by order, only requirement: each column has at least one group if possible
+  const groupEntries = Object.entries(groupedTasks);
+  let columns: [Array<[string, typeof categories]>, Array<[string, typeof categories]>] = [[], []];
+  if (groupEntries.length === 1) {
+    columns[0] = [groupEntries[0]];
+  } else if (groupEntries.length > 1) {
+    // First group in col 0, second in col 1, then alternate
+    columns[0] = [groupEntries[0]];
+    columns[1] = [groupEntries[1]];
+    for (let i = 2; i < groupEntries.length; i++) {
+      columns[i % 2].push(groupEntries[i]);
+    }
+  }
+
   return (
     <>
       <div className="space-y-8">
-        {/* Header with Edit Controls */}
-        <div className="flex justify-between items-center">
-          <h3 className="text-xl font-semibold text-gray-900">Task Categories</h3>
-          <div className="flex items-center gap-3">
-            <button
-              onClick={() => setEditMode(!editMode)}
-              className={`p-2 rounded-lg transition-colors ${
-                editMode ? 'bg-blue-100 text-blue-600' : 'hover:bg-gray-100 text-gray-600'
-              }`}
-              title="Edit tasks"
-            >
-              <Edit2 size={16} />
-            </button>
-          </div>
-        </div>
-
-        {/* Grouped Task Cards in 2-Column Layout */}
-        {Object.keys(groupedTasks).length === 0 ? (
+        {/* Grouped Task Cards in 2-Column Masonry Layout */}
+        {groupEntries.length === 0 ? (
           <div className="text-center py-12">
             <div className="text-gray-400 mb-4">
               <Plus size={48} className="mx-auto" />
@@ -65,36 +63,17 @@ export const TasksTab: React.FC = () => {
             <p className="text-gray-600 mb-6">Create your first task to start earning points</p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {Object.entries(groupedTasks).map(([color, tasks]) => {
-              // Calculate grid rows needed for dynamic height
-              const tasksPerRow = 2;
-              const rows = Math.ceil(tasks.length / tasksPerRow);
-              
-              return (
+          <div className="flex flex-row gap-8">
+            <div className="flex-1 flex flex-col gap-8">
+              {columns[0].map(([color, tasks]) => (
                 <div 
                   key={color} 
                   className="rounded-2xl overflow-hidden shadow-lg border border-white/20 backdrop-blur-md"
                   style={{
                     background: `linear-gradient(135deg, ${color}15, ${color}08)`,
-                    borderColor: `${color}30`,
-                    minHeight: `${120 + (rows * 120)}px` // Dynamic height based on content
+                    borderColor: `${color}30`
                   }}
                 >
-                  {/* Group Header - Glassmorphism */}
-                  <div 
-                    className="px-6 py-4 text-white relative overflow-hidden"
-                    style={{ backgroundColor: color }}
-                  >
-                    <div className="absolute inset-0 bg-white/10 backdrop-blur-sm"></div>
-                    <div className="relative z-10 flex items-center gap-3">
-                      <div className="w-4 h-4 rounded-full bg-white/30" />
-                      <h4 className="text-lg font-semibold">
-                        {tasks[0].name.split(' ')[0]} Tasks
-                      </h4>
-                    </div>
-                  </div>
-
                   {/* Tasks in this group - 2 column layout */}
                   <div className="p-4">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -107,20 +86,9 @@ export const TasksTab: React.FC = () => {
                             borderColor: `${color}20`
                           }}
                         >
-                          {/* Edit Icon */}
-                          {editMode && (
-                            <button
-                              onClick={() => handleEditTask(task)}
-                              className="absolute top-2 left-2 p-1.5 bg-blue-100 text-blue-600 rounded-lg hover:bg-blue-200 transition-colors z-10"
-                              title="Edit task"
-                            >
-                              <Edit2 size={12} />
-                            </button>
-                          )}
-
                           <div className="space-y-3">
                             {/* Task Header - Title and Points on same line */}
-                            <div className={`flex items-start justify-between ${editMode ? 'pt-6' : ''}`}>
+                            <div className="flex items-start justify-between">
                               <h5 className="font-bold text-gray-900 text-sm flex-1 pr-2">{task.name}</h5>
                               {/* Points indicator in top-right */}
                               <div 
@@ -130,17 +98,16 @@ export const TasksTab: React.FC = () => {
                                 +{task.defaultPointValue}
                               </div>
                             </div>
-
                             {/* Description */}
                             {task.description && (
                               <p className="text-xs text-gray-600 line-clamp-2">{task.description}</p>
                             )}
-
                             {/* Action Buttons - Icon only for compact layout */}
                             <div className="flex gap-2">
                               <button
                                 onClick={() => handleAddPoints(task.id)}
-                                className="flex-1 py-2 px-2 bg-gray-900 text-white rounded-lg hover:bg-gray-800 transition-colors text-xs flex items-center justify-center"
+                                className="flex-1 py-2 px-2 rounded-lg transition-colors text-xs flex items-center justify-center"
+                                style={{ backgroundColor: color, color: '#fff' }}
                                 title="Add Points"
                               >
                                 <Plus size={12} />
@@ -159,8 +126,72 @@ export const TasksTab: React.FC = () => {
                     </div>
                   </div>
                 </div>
-              );
-            })}
+              ))}
+            </div>
+            <div className="flex-1 flex flex-col gap-8">
+              {columns[1].map(([color, tasks]) => (
+                <div 
+                  key={color} 
+                  className="rounded-2xl overflow-hidden shadow-lg border border-white/20 backdrop-blur-md"
+                  style={{
+                    background: `linear-gradient(135deg, ${color}15, ${color}08)`,
+                    borderColor: `${color}30`
+                  }}
+                >
+                  {/* Tasks in this group - 2 column layout */}
+                  <div className="p-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                      {tasks.map(task => (
+                        <div 
+                          key={task.id} 
+                          className="relative rounded-xl border border-white/20 backdrop-blur-sm p-3 hover:shadow-md transition-all"
+                          style={{
+                            background: `linear-gradient(135deg, ${color}10, ${color}05)`,
+                            borderColor: `${color}20`
+                          }}
+                        >
+                          <div className="space-y-3">
+                            {/* Task Header - Title and Points on same line */}
+                            <div className="flex items-start justify-between">
+                              <h5 className="font-bold text-gray-900 text-sm flex-1 pr-2">{task.name}</h5>
+                              {/* Points indicator in top-right */}
+                              <div 
+                                className="px-2 py-1 rounded-full text-xs font-bold text-white flex-shrink-0"
+                                style={{ backgroundColor: color }}
+                              >
+                                +{task.defaultPointValue}
+                              </div>
+                            </div>
+                            {/* Description */}
+                            {task.description && (
+                              <p className="text-xs text-gray-600 line-clamp-2">{task.description}</p>
+                            )}
+                            {/* Action Buttons - Icon only for compact layout */}
+                            <div className="flex gap-2">
+                              <button
+                                onClick={() => handleAddPoints(task.id)}
+                                className="flex-1 py-2 px-2 rounded-lg transition-colors text-xs flex items-center justify-center"
+                                style={{ backgroundColor: color, color: '#fff' }}
+                                title="Add Points"
+                              >
+                                <Plus size={12} />
+                              </button>
+                              <button
+                                onClick={() => handleRemovePoints(task.id)}
+                                className="flex-1 py-2 px-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 transition-colors text-xs flex items-center justify-center"
+                                title="Remove Points"
+                              >
+                                <Minus size={12} />
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         )}
       </div>

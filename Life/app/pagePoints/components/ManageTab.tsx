@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { usePoints } from '../PointsContext';
-import { Edit2, Trash2, Plus, Gift, Eye, EyeOff, ChevronUp, ChevronDown } from 'lucide-react';
+import { Edit2, Trash2, Plus, Gift, Eye, EyeOff, ChevronUp, ChevronDown, GripVertical } from 'lucide-react';
 import { AddTaskModal } from './AddTaskModal';
 import { AddRewardModal } from './AddRewardModal';
 
 export const ManageTab: React.FC = () => {
-  const { categories, rewards, deleteCategory, deleteReward, updateReward, updateCategory } = usePoints();
+  const { categories, rewards, deleteCategory, deleteReward, updateReward, updateCategory, setCategories } = usePoints();
   const [editingTask, setEditingTask] = useState<any>(null);
   const [editingReward, setEditingReward] = useState<any>(null);
   const [showAddTask, setShowAddTask] = useState(false);
@@ -13,6 +13,8 @@ export const ManageTab: React.FC = () => {
   const [groupTitles, setGroupTitles] = useState<Record<string, string>>({});
   const [editingGroupTitle, setEditingGroupTitle] = useState<string | null>(null);
   const [groupTitleValue, setGroupTitleValue] = useState('');
+  const [draggedIdx, setDraggedIdx] = useState<number | null>(null);
+  const dragOverIdx = useRef<number | null>(null);
 
   const handleDeleteTask = (id: string) => {
     if (confirm('Are you sure you want to delete this task? All associated logs will be removed.')) {
@@ -103,6 +105,54 @@ export const ManageTab: React.FC = () => {
     return groups;
   }, {} as Record<string, typeof categories>);
 
+  // Split into two columns by order, only requirement: each column has at least one group if possible
+  const groupKeys = Object.keys(groupedTasks);
+  const groupEntries: [string, typeof categories][] = groupKeys.map(key => [key, groupedTasks[key]]);
+  let columns: [Array<[string, typeof categories]>, Array<[string, typeof categories]>] = [[], []];
+  if (groupEntries.length === 1) {
+    columns[0] = [groupEntries[0]];
+  } else if (groupEntries.length > 1) {
+    columns[0] = [groupEntries[0]];
+    columns[1] = [groupEntries[1]];
+    for (let i = 2; i < groupEntries.length; i++) {
+      columns[i % 2].push(groupEntries[i]);
+    }
+  }
+
+  // Drag and drop state for two columns
+  const [dragged, setDragged] = useState<{col: number, idx: number} | null>(null);
+  const dragOver = useRef<{col: number, idx: number} | null>(null);
+
+  const handleDragStart = (col: number, idx: number) => setDragged({col, idx});
+  const handleDragEnter = (col: number, idx: number) => { dragOver.current = {col, idx}; };
+  const handleDragEnd = () => {
+    if (!dragged || !dragOver.current) {
+      setDragged(null);
+      dragOver.current = null;
+      return;
+    }
+    // Flatten columns to a single list in column order
+    var flat = columns[0].concat(columns[1]);
+    // Find the dragged and target indices in the flat list
+    const fromIdx = dragged.col === 0 ? dragged.idx : columns[0].length + dragged.idx;
+    const toIdx = dragOver.current.col === 0 ? dragOver.current.idx : columns[0].length + dragOver.current.idx;
+    if (fromIdx === toIdx) {
+      setDragged(null);
+      dragOver.current = null;
+      return;
+    }
+    const newOrder = flat.slice();
+    const removed = newOrder.splice(fromIdx, 1)[0];
+    newOrder.splice(toIdx, 0, removed);
+    // Update priorities
+    var flatTasks = newOrder.reduce(function(acc, entry) {
+      return acc.concat(entry[1]);
+    }, []);
+    setCategories(flatTasks.map(function(cat, idx) { return { ...cat, priority: idx }; }));
+    setDragged(null);
+    dragOver.current = null;
+  };
+
   const handleEditGroupTitle = (color: string, currentTitle: string) => {
     setEditingGroupTitle(color);
     setGroupTitleValue(currentTitle);
@@ -148,49 +198,64 @@ export const ManageTab: React.FC = () => {
               <p className="text-gray-600">No task groups created yet</p>
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {Object.entries(groupedTasks).map(([color, tasks]) => {
-                const groupTitle = getGroupTitle(color, tasks);
-                
-                return (
-                  <div key={color} className="bg-white rounded-lg border border-gray-200 p-4">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-3">
-                        <div 
-                          className="w-4 h-4 rounded-full"
-                          style={{ backgroundColor: color }}
-                        />
-                        {editingGroupTitle === color ? (
-                          <input
-                            type="text"
-                            value={groupTitleValue}
-                            onChange={(e) => setGroupTitleValue(e.target.value)}
-                            onBlur={() => handleSaveGroupTitle(color)}
-                            onKeyDown={(e) => {
-                              if (e.key === 'Enter') handleSaveGroupTitle(color);
-                              if (e.key === 'Escape') setEditingGroupTitle(null);
-                            }}
-                            className="font-medium text-gray-900 border border-gray-300 rounded px-2 py-1"
-                            autoFocus
-                          />
-                        ) : (
-                          <h4 className="font-medium text-gray-900">{groupTitle}</h4>
-                        )}
+            <div className="flex flex-row gap-8">
+              {[0, 1].map(col => (
+                <div key={col} className="flex-1 flex flex-col gap-4">
+                  {columns[col].map(([color, tasks], idx) => {
+                    const groupTitle = getGroupTitle(color, tasks);
+                    return (
+                      <div
+                        key={color}
+                        className={`bg-white rounded-lg border border-gray-200 p-4 ${(dragged && dragged.col === col && dragged.idx === idx) ? 'opacity-50' : ''}`}
+                        draggable
+                        onDragStart={() => handleDragStart(col, idx)}
+                        onDragEnter={() => handleDragEnter(col, idx)}
+                        onDragEnd={handleDragEnd}
+                        onDragOver={e => e.preventDefault()}
+                      >
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-3">
+                            <div 
+                              className="w-4 h-4 rounded-full"
+                              style={{ backgroundColor: color }}
+                            />
+                            {editingGroupTitle === color ? (
+                              <input
+                                type="text"
+                                value={groupTitleValue}
+                                onChange={(e) => setGroupTitleValue(e.target.value)}
+                                onBlur={() => handleSaveGroupTitle(color)}
+                                onKeyDown={(e) => {
+                                  if (e.key === 'Enter') handleSaveGroupTitle(color);
+                                  if (e.key === 'Escape') setEditingGroupTitle(null);
+                                }}
+                                className="font-medium text-gray-900 border border-gray-300 rounded px-2 py-1"
+                                autoFocus
+                              />
+                            ) : (
+                              <h4 className="font-medium text-gray-900">{groupTitle}</h4>
+                            )}
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <span className="text-sm text-gray-500">{tasks.length} tasks</span>
+                            <button
+                              onClick={() => handleEditGroupTitle(color, groupTitle)}
+                              className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+                              title="Edit group title"
+                            >
+                              <Edit2 size={14} className="text-gray-600" />
+                            </button>
+                            {/* Drag handle for reordering */}
+                            <span className="cursor-grab p-2" title="Drag to reorder">
+                              <GripVertical size={16} className="text-gray-400" />
+                            </span>
+                          </div>
+                        </div>
                       </div>
-                      <div className="flex items-center gap-2">
-                        <span className="text-sm text-gray-500">{tasks.length} tasks</span>
-                        <button
-                          onClick={() => handleEditGroupTitle(color, groupTitle)}
-                          className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
-                          title="Edit group title"
-                        >
-                          <Edit2 size={14} className="text-gray-600" />
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
+                    );
+                  })}
+                </div>
+              ))}
             </div>
           )}
         </div>

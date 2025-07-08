@@ -48,18 +48,6 @@ export const GoalsTab: React.FC = () => {
   return (
     <>
       <div className="space-y-8">
-        {/* Header */}
-        <div className="flex justify-between items-center">
-          <h3 className="text-xl font-semibold text-gray-900">Points Goals</h3>
-          <button
-            onClick={() => setShowAddGoal(true)}
-            className="flex items-center gap-2 px-4 py-2 bg-gray-900 text-white rounded-lg hover:bg-gray-800 transition-colors font-medium"
-          >
-            <Plus size={16} />
-            Add Goal
-          </button>
-        </div>
-
         {/* Active Goals */}
         {activeGoals.length > 0 && (
           <div className="space-y-4">

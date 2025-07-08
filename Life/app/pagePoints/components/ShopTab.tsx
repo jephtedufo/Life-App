@@ -31,23 +31,7 @@ export const ShopTab: React.FC = () => {
     <>
       <div className="space-y-6">
         {/* Header */}
-        <div className="flex justify-between items-center">
-          <div>
-            <h3 className="text-xl font-semibold text-gray-900">Shop</h3>
-            <div className="flex items-center gap-2 mt-1">
-              <Sparkles size={16} className="text-amber-500" />
-              <p className="text-gray-600">
-                Current Balance: <span className="font-bold text-gray-900">{currentBalance.toLocaleString()} points</span>
-              </p>
-            </div>
-          </div>
-          <button
-            onClick={() => setShowAddReward(true)}
-            className="flex items-center gap-2 px-4 py-2 bg-gray-900 text-white rounded-lg hover:bg-gray-800 transition-colors font-medium"
-          >
-            Add Item
-          </button>
-        </div>
+        {/* Removed Add Item button */}
 
         {/* E-commerce Style Rewards Grid */}
         {rewards.length === 0 ? (
