@@ -1,6 +1,6 @@
 import React from 'react';
 import { Statistics } from './components/Statistics';
-import { AddHabitForm } from '../components/forms/AddHabitForm';
+import { AddHabitForm } from '../pageHabits/AddHabitForm';
 import { useHabits } from './HabitContext';
 import { TrendingUp, Target, AlertTriangle } from 'lucide-react';
 
