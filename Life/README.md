@@ -2,6 +2,70 @@
 
 A beautiful, production-ready habit tracking application built with React, TypeScript, and Tailwind CSS. Track your daily habits with an intuitive calendar interface and comprehensive statistics.
 
+---
+
+## 🧭 App Overview
+
+Jephte Habit Tracker is a productivity app that helps you build and maintain positive habits, track your daily routines, and reward yourself for progress. The app is organized into three main pages:
+
+- **Calendar**: Visualize and mark your daily habit progress.
+- **Habits**: Manage your habits, view detailed statistics, and analyze your performance.
+- **Points**: Earn, spend, and manage points for completing tasks, with a built-in rewards system.
+
+You can navigate between pages using the navigation icons at the top of each section.
+
+---
+
+## 📄 Pages & Features
+
+### 1. **Calendar Page**
+- **Purpose**: Visual habit tracking in a monthly calendar layout.
+- **Features**:
+  - **Calendar Grid**: See all days of the current month, with each day showing your habits.
+  - **Mark Progress**: Click a habit on a day to mark as successful, right-click for failure.
+  - **Month Navigation**: Move between months using arrow buttons.
+  - **Add Habit**: Use the "Add new habit..." button to create a new habit.
+  - **Settings Modal**: Access settings (24-hour time, compact mode, edit past days, reset data).
+- **How to Use**: Use the calendar to quickly mark your daily progress. Use the settings to customize your experience.
+
+### 2. **Habits Page**
+- **Purpose**: Manage your habits and view analytics.
+- **Features**:
+  - **Add Habit**: Create new habits with custom schedules.
+  - **Habit List**: View all habits, edit or delete them.
+  - **Statistics Sidebar**: Click a habit to view detailed stats (success rate, streaks, history).
+  - **Summary Cards**: See monthly success rate, highest streak, and alerts for missed days.
+  - **Settings Modal**: Same as Calendar page.
+- **How to Use**: Add, edit, or delete habits. Click on a habit for analytics. Use the sidebar for quick actions.
+
+### 3. **Points Page**
+- **Purpose**: Gamify your productivity with a points and rewards system.
+- **Features**:
+  - **Add Task Category**: Create categories for earning points.
+  - **Points Overview**: See points earned, available balance, and points spent.
+  - **Tabs**:
+    - **Tasks**: Add/remove points for task completion.
+    - **Shop**: Redeem points for rewards.
+    - **Goals**: Set and track points-based goals.
+    - **History**: View all points transactions (earned/spent), filter by type/category.
+    - **Manage**: Edit or delete tasks and rewards.
+    - **Connect**: Link habits to tasks so completing a habit automatically earns points.
+  - **Settings Modal**: Reset points data, edit past days, compact mode, etc.
+- **How to Use**: Add tasks, earn points, redeem rewards, and connect habits for automation.
+
+---
+
+## 📝 Prompting Guide
+
+- **To refer to a page**: "Go to the Calendar page", "Open the Points page", "Switch to Habits"
+- **To add a habit**: "Add a new habit for reading", "Create a habit for exercise on Mon/Wed/Fri"
+- **To mark progress**: "Mark today's habits as successful", "Right-click to mark as failed"
+- **To view stats**: "Show me the statistics for my 'Exercise' habit"
+- **To manage points**: "Add a new task category", "Redeem points for a reward", "View my points history"
+- **To use settings**: "Open settings and enable compact mode", "Reset all data from settings"
+
+---
+
 ## 🚀 Features
 
 - **Calendar View**: Visual habit tracking with monthly calendar layout
