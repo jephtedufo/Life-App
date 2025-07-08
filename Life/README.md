@@ -160,3 +160,5 @@ assets/                 # Static assets (images, icons)
 ## 📄 License
 
 This project is licensed under the MIT License.
+
+- All configuration files (Vite, TypeScript, Tailwind, ESLint, etc.) are now in the config/ directory for better organization.
