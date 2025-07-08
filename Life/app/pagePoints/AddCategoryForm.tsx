@@ -5,7 +5,6 @@ import { Settings, Edit3, Calendar, CheckSquare, Trophy, Download } from 'lucide
 import { ConfirmDialog } from '../allComponents/ConfirmDialog';
 import { AddTaskModal } from './components/AddTaskModal';
 import { SettingsModal } from '../allComponents/SettingsModal';
-import { PointsExportModal } from './components/PointsExportModal';
 
 interface AddCategoryFormProps {
   onNavigate: (page: 'calendar' | 'habits' | 'points') => void;
@@ -15,7 +14,6 @@ export const AddCategoryForm: React.FC<AddCategoryFormProps> = ({ onNavigate }) 
   const { resetAllPointsData } = usePoints();
   const { resetAllData, allowPastEditing, setAllowPastEditing, compactMode, setCompactMode } = useHabits();
   const [showSettingsModal, setShowSettingsModal] = useState(false);
-  const [showExportModal, setShowExportModal] = useState(false);
   const [showResetConfirm, setShowResetConfirm] = useState(false);
   const [showTaskModal, setShowTaskModal] = useState(false);
 
@@ -60,13 +58,13 @@ export const AddCategoryForm: React.FC<AddCategoryFormProps> = ({ onNavigate }) 
           </button>
           
           {/* Export Button */}
-          <button
+          {/* <button
             onClick={() => setShowExportModal(true)}
             className="w-12 h-12 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center justify-center"
             aria-label="Export Data"
           >
             <Download size={20} />
-          </button>
+          </button> */}
           
           {/* Settings Button */}
           <button
@@ -95,12 +93,6 @@ export const AddCategoryForm: React.FC<AddCategoryFormProps> = ({ onNavigate }) 
       <AddTaskModal
         isOpen={showTaskModal}
         onClose={() => setShowTaskModal(false)}
-      />
-
-      {/* Export Modal */}
-      <PointsExportModal
-        isOpen={showExportModal}
-        onClose={() => setShowExportModal(false)}
       />
 
       {/* Settings Modal */}

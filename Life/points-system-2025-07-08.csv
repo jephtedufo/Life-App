@@ -1,0 +1,58 @@
+# Jephte Points System Export
+# Export Date: 2025-07-08T07:52:04.712Z
+# Version: 1.0
+
+# TASK_CATEGORIES
+id,name,description,default_point_value,color,created_at,priority
+"c93f08fd-33cc-4961-b7fe-9879dedcaeca","Ignitia Lessons","Earned for completing a lesson module in Ignitia coursework.",10,"#3B82F6","2025-07-03T16:52:38.131Z",0
+"5ae111d1-552f-4444-8101-56584fe39ccb","Ignitia Projects / Essays","For completing detailed writing tasks or projects for school.",50,"#3B82F6","2025-07-03T16:52:59.971Z",0
+"e85b3be0-e9d1-4bf0-8d73-79551adbf6df","Ignitia Quiz / Tests","For finishing a quiz, test, or exam in your Ignitia platform.",35,"#3B82F6","2025-07-03T16:53:10.578Z",0
+"78448944-887a-4392-98bf-3a953a123efb","Reading For 30 Minutes","For reading any educational or personal development material for 30 minutes.",55,"#3B82F6","2025-07-03T16:55:16.172Z",0
+"fa370edf-dc44-4021-abea-7e74f027c2cb","Reading Whole Book","For finishing a full book. Must be logged honestly.",80,"#3B82F6","2025-07-03T16:55:56.203Z",0
+"c373691c-5e7f-4bd4-92e1-070ac56154fe","Study Plan - Understand 2 Math Lessons","When two full math lessons are deeply understood or reviewed from study plan.",20,"#3B82F6","2025-07-03T16:59:43.867Z",0
+"6a26c883-86e4-4be9-8dae-09e66e360a39","Study Plan - Understanding 2 English Lessons","For completing and understanding three full English lessons from study plan.",25,"#3B82F6","2025-07-03T17:05:13.947Z",0
+"3bb81adf-c600-4f34-8885-ebdfa2ae7af9","Exercise Running","Points earned after going for a consistent 1hour+ run.",32,"#10B981","2025-07-03T17:05:32.722Z",0
+"a6110840-dde1-4045-b866-5e5e6bcb889f","Exercise Workout","For finishing a strength or full cardio workout session.",35,"#10B981","2025-07-03T17:05:42.627Z",0
+"ef3aeff1-c515-4c2d-8698-c808be393bc1","Exercise Cold Bath","Earned after going through a cold bath or cold exposure session, for resistance strength.",38,"#10B981","2025-07-03T17:06:30.147Z",0
+"254addf2-e64e-42b0-8f76-047222a134a8","Hackathon - Alira","For completing a task or milestone related to a hackathon.",42,"#6B7280","2025-07-03T17:07:38.539Z",0
+"ca3ccaf3-ff9f-4aba-8824-9cbfc616bcb6","Project - Interact Health Pro","Earned for completing assigned responsibilities for IHP work.",30,"#F59E0B","2025-07-03T17:07:52.851Z",0
+"14632556-f4bf-42d1-8b04-6ab100d7cbd8","Project - JD Agency","For tasks done under JD Agency project or client assigned work.",28,"#F59E0B","2025-07-03T17:08:25.427Z",0
+"ec849658-444e-4539-949f-0184ed6f1a43","Project - Speedzing","For publishing or completing tasks for Speedzing channel content.",20,"#F59E0B","2025-07-03T17:08:37.762Z",0
+"f302f08c-c4ee-48a9-86c6-c784c7f2eaa0","Other [ Under 30 Minutes ]","Any assigned task not related to Projects or School completed that took less than 30 minutes.",10,"#EF4444","2025-07-03T17:54:49.965Z",0
+"7728fe15-18f8-4a94-b0db-055dd7c10c2d","Other [ Over 30 Minutes ]","Any P1 assigned task not related to Projects or School completed that took more than 30 minutes.",35,"#EF4444","2025-07-03T17:55:22.717Z",0
+"569f54d3-6f85-4449-b39f-2a7c82f73f54","Other [ Over 2 Hours ]","Any assigned task not related to Projects or School completed that took more than 2 hours.",62,"#EF4444","2025-07-04T11:42:48.374Z",17
+"45f21ded-bb34-490e-89e5-53be4aa9a6d8","Other [ Full Day ]","Any P1 assigned task not related to Projects or School completed that took the whole day.",80,"#EF4444","2025-07-04T11:43:52.254Z",17
+
+# POINT_LOGS
+id,category_id,description,tasks_completed,points_per_task,total_points,date,created_at
+"e2e245ec-0ca5-4ad2-b14d-60795ce0146c","c93f08fd-33cc-4961-b7fe-9879dedcaeca","Points added",1,30,30,"2025-07-03","2025-07-03T19:08:41.187Z"
+"5a555ac1-dc54-4f68-a09a-81e28649043c","c93f08fd-33cc-4961-b7fe-9879dedcaeca","Points added",1,30,30,"2025-07-03","2025-07-03T19:08:43.793Z"
+"69a9bcf5-f6bf-4081-aeb4-aba82f84d906","c93f08fd-33cc-4961-b7fe-9879dedcaeca","Points added",1,10,10,"2025-07-04","2025-07-04T09:11:46.351Z"
+"5934aaa6-29ee-44d8-afbb-a4b92729e19b","14632556-f4bf-42d1-8b04-6ab100d7cbd8","Points added",1,28,28,"2025-07-04","2025-07-04T15:18:00.630Z"
+"4284d329-47dc-4654-acef-469cf69f31f0","c93f08fd-33cc-4961-b7fe-9879dedcaeca","Points added",1,10,10,"2025-07-04","2025-07-04T18:08:17.838Z"
+"c13c2282-6f52-442b-aaab-1766f19277b2","c93f08fd-33cc-4961-b7fe-9879dedcaeca","Points added",1,10,10,"2025-07-04","2025-07-04T18:08:20.046Z"
+"45cbb1f8-b55c-4b4e-86e3-b7042de825c7","c93f08fd-33cc-4961-b7fe-9879dedcaeca","Points removed",1,-10,-10,"2025-07-04","2025-07-04T18:08:55.839Z"
+"3508982a-e429-4f10-a595-bb11dd3b4079","e85b3be0-e9d1-4bf0-8d73-79551adbf6df","Points added",1,35,35,"2025-07-04","2025-07-04T18:08:58.206Z"
+"3bec7cc6-1e7f-46f6-9703-c3822406a5fa","e85b3be0-e9d1-4bf0-8d73-79551adbf6df","Points added",1,35,35,"2025-07-04","2025-07-04T18:08:59.616Z"
+"f0d94cda-095a-4588-942d-d8c06cf020e7","c93f08fd-33cc-4961-b7fe-9879dedcaeca","Points added",1,10,10,"2025-07-04","2025-07-04T18:19:27.546Z"
+"3cef6cc8-418c-4a10-9bfb-c150ce56e550","c93f08fd-33cc-4961-b7fe-9879dedcaeca","Points added",1,10,10,"2025-07-04","2025-07-04T18:19:28.286Z"
+"f0222d21-9370-4a4e-a317-5b50d1327d1a","e85b3be0-e9d1-4bf0-8d73-79551adbf6df","Points added",1,35,35,"2025-07-04","2025-07-04T18:19:40.318Z"
+
+# REWARDS
+id,title,description,cost,image_url,show_image,column_width,priority,created_at
+"ccd9c2c5-a02c-4138-9f82-1672decdb421","Instagram","Scrolling, Texting, Watching Received Reels for 30 Minutes.",170,"data:image/png;base64,true,1,0,"2025-07-03T17:29:00.077Z"
+"81766ec3-02b8-443c-b27c-9c7757382740","Valorant - Locked In Bundle","Play one full Valorant game (competitive/unrated).",500,"blob:https://jephte.netlify.app/9df6b036-ac50-4116-ab3c-55ec83402c66",true,1,0,"2025-07-03T17:29:00.077Z"
+"1541e206-7895-48b8-8a81-1656e24c3a65","Fragpunk – Locked In Bundle","Play one full Fragpunk match.",433,"blob:https://jephte.netlify.app/c9d7b6dd-71f4-41e9-8207-ef7eb03f8548",true,1,0,"2025-07-03T17:29:49.533Z"
+"56a46b52-6759-4475-9821-19330dbc8af1","Stardew Valley – Full Day Bundle","Play one complete day in Stardew Valley.",230,"blob:https://jephte.netlify.app/ec20a39a-11d3-4906-a56c-2d053a6c4175",true,1,0,"2025-07-03T17:33:19.717Z"
+"3c8faacd-0cec-452e-b61f-e8eeb3d363f9","ETS2 / ATS – Long Drive","3 Hour relaxing session in Euro Truck Simulator 2 / American Truck Simulator.",550,"blob:https://jephte.netlify.app/98dd8477-eb13-455a-9aa5-b34cf0dac692",true,1,0,"2025-07-03T17:35:04.205Z"
+"bc0f5a19-a1c0-424b-a6b9-3d09dd7154e6","ETS2 / ATS – Full Drive","Complete one full freight delivery from pickup to drop, has to be 6000+km trip.",580,"blob:https://jephte.netlify.app/20dfd971-d669-40e2-b155-f70d704b6efd",true,1,7,"2025-07-03T17:36:22.781Z"
+
+# REDEMPTIONS
+id,reward_id,reward_title,points_spent,date,created_at
+"0cfe0c30-2637-40e5-b53e-a6df32272053","47dc2dc1-6022-4b27-8b3f-f2898c2135d1","Texting Person",200,"2025-07-04","2025-07-04T18:19:54.662Z"
+
+# GOALS
+id,title,target_points,start_date,end_date,created_at
+
+# HABIT_CONNECTIONS
+id,habit_id,task_id,created_at

@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { X, Edit3, RefreshCw, Download, Clock, Trophy, Grid3X3 } from 'lucide-react';
 import { ToggleSwitch } from './ToggleSwitch';
-import { ImportExportModal } from './ImportExportModal';
 import { useHabits } from '../pageHabits/HabitContext';
 import { usePoints } from '../pagePoints/PointsContext';
 
@@ -24,7 +23,6 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
   onToggleCompactMode,
   onResetData,
 }) => {
-  const [showImportExport, setShowImportExport] = useState(false);
   const { use24HourFormat, setUse24HourFormat } = useHabits();
   const { resetAllPointsData } = usePoints();
 
@@ -125,23 +123,6 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
             {/* Divider */}
             <div className="mx-6 border-t border-gray-100" />
             
-            {/* Import/Export Data */}
-            <button
-              onClick={() => setShowImportExport(true)}
-              className="flex items-center gap-4 w-full px-6 py-4 text-left hover:bg-gray-50/50 transition-colors group"
-            >
-              <div className="p-2 bg-blue-50 rounded-lg group-hover:bg-blue-100 transition-colors">
-                <Download size={16} className="text-blue-600" />
-              </div>
-              <div>
-                <span className="font-medium text-gray-900 block">Import & Export</span>
-                <span className="text-sm text-gray-500">Backup or restore your habit data</span>
-              </div>
-            </button>
-            
-            {/* Divider */}
-            <div className="mx-6 border-t border-gray-100" />
-            
             {/* Reset Points Data */}
             <button
               onClick={handleResetPointsOnly}
@@ -169,12 +150,6 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
           </div>
         </div>
       </div>
-
-      {/* Import/Export Modal */}
-      <ImportExportModal
-        isOpen={showImportExport}
-        onClose={() => setShowImportExport(false)}
-      />
     </>
   );
 };

@@ -14,6 +14,7 @@ interface PointsContextType {
   setRewards: (rewards: Reward[] | ((prev: Reward[]) => Reward[])) => void;
   setRedemptions: (redemptions: RedemptionLog[] | ((prev: RedemptionLog[]) => RedemptionLog[])) => void;
   setGoals: (goals: PointsGoal[] | ((prev: PointsGoal[]) => PointsGoal[])) => void;
+  setHabitConnections: (connections: HabitTaskConnection[] | ((prev: HabitTaskConnection[]) => HabitTaskConnection[])) => void;
   addCategory: (name: string, description: string, categoryAmount: number, color: string) => void;
   updateCategory: (category: TaskCategory) => void;
   deleteCategory: (id: string) => void;
@@ -252,6 +253,7 @@ export const PointsProvider: React.FC<{ children: React.ReactNode }> = ({ childr
       setRewards,
       setRedemptions,
       setGoals,
+      setHabitConnections,
       addCategory,
       updateCategory,
       deleteCategory,

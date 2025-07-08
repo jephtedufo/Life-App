@@ -19,7 +19,6 @@ export const PointsPage: React.FC<PointsPageProps> = ({ onNavigate }) => {
             </p>
           </div>
         </div>
-
         <div className="space-y-12 mb-8">
           <AddCategoryForm onNavigate={onNavigate} />
           <PointsSystem hideTitle={true} />

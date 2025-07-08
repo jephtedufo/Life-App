@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import { usePoints } from '../PointsContext';
-import { Link2, Target, History, ShoppingCart, Plus, TrendingUp, Settings, Edit2, Trash2, Download } from 'lucide-react';
+import { Link2, Target, History, ShoppingCart, Plus, TrendingUp, Settings, Edit2, Trash2 } from 'lucide-react';
 import { TasksTab } from './TasksTab';
 import { ShopTab } from './ShopTab';
 import { HistoryTab } from './HistoryTab';
 import { GoalsTab } from './GoalsTab';
 import { ManageTab } from './ManageTab';
 import { ConnectTab } from './ConnectTab';
-import { PointsExportModal } from './PointsExportModal';
 
 type PointsTab = 'tasks' | 'shop' | 'goals' | 'history' | 'manage' | 'connect';
 
@@ -18,7 +17,6 @@ interface PointsSystemProps {
 export const PointsSystem: React.FC<PointsSystemProps> = ({ hideTitle = false }) => {
   const { getCurrentBalance, getTotalPoints } = usePoints();
   const [activeTab, setActiveTab] = useState<PointsTab>('tasks');
-  const [showExportModal, setShowExportModal] = useState(false);
 
   const currentBalance = getCurrentBalance();
   const totalEarned = getTotalPoints();
@@ -39,13 +37,6 @@ export const PointsSystem: React.FC<PointsSystemProps> = ({ hideTitle = false })
         {!hideTitle && (
           <div className="flex items-center justify-between">
             <h2 className="text-6xl font-bold text-gray-900">Points</h2>
-            <button
-              onClick={() => setShowExportModal(true)}
-              className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium"
-            >
-              <Download size={16} />
-              Export Data
-            </button>
           </div>
         )}
 
@@ -118,12 +109,6 @@ export const PointsSystem: React.FC<PointsSystemProps> = ({ hideTitle = false })
           {activeTab === 'connect' && <ConnectTab />}
         </div>
       </div>
-
-      {/* Export Modal */}
-      <PointsExportModal
-        isOpen={showExportModal}
-        onClose={() => setShowExportModal(false)}
-      />
     </>
   );
 };
