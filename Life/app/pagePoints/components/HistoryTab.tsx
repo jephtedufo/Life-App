@@ -70,7 +70,7 @@ export const HistoryTab: React.FC = () => {
           {/* Type Filter */}
           <select
             value={filter}
-            onChange={(e) => setFilter(e.target.value as any)}
+            onChange={(e) => setFilter(e.target.value as 'all' | 'earned' | 'spent')}
             className="px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent text-sm"
           >
             <option value="all">All Transactions</option>

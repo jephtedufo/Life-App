@@ -7,7 +7,7 @@ import { PointsPage } from './pagePoints/PointsPage';
 
 type Page = 'calendar' | 'habits' | 'points';
 
-function App() {
+const App: React.FC = () => {
   const [currentPage, setCurrentPage] = useState<Page>('calendar');
 
   const renderPage = () => {

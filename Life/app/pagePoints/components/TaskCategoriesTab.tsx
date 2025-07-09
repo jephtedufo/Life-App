@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { usePoints } from '../../context/PointsContext';
 import { Plus, Edit2, Trash2, Minus } from 'lucide-react';
 import { AddCategoryModal } from './AddCategoryModal';
+import { usePoints } from '../PointsContext';
 
 interface TaskCategoriesTabProps {
   hideAddButton?: boolean;
@@ -31,11 +31,6 @@ export const TaskCategoriesTab: React.FC<TaskCategoriesTabProps> = ({ hideAddBut
     if (category) {
       addPointLog(categoryId, 'Points removed', 1, -category.defaultPointValue);
     }
-  };
-
-  const getCategoryStats = (categoryId: string) => {
-    // This would be implemented in the context
-    return { totalPoints: 0, totalTasks: 0 };
   };
 
   const hexToRgba = (hex: string, alpha: number) => {
@@ -114,7 +109,6 @@ export const TaskCategoriesTab: React.FC<TaskCategoriesTabProps> = ({ hideAddBut
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {categories.map(category => {
-              const stats = getCategoryStats(category.id);
 
               return (
                 <div 
@@ -147,11 +141,11 @@ export const TaskCategoriesTab: React.FC<TaskCategoriesTabProps> = ({ hideAddBut
                     {/* Stats */}
                     <div className="grid grid-cols-2 gap-3 mb-4">
                       <div className="text-center p-3 bg-white rounded-lg border border-gray-200">
-                        <div className="text-xl font-bold text-gray-900">{stats.totalPoints}</div>
+                        <div className="text-xl font-bold text-gray-900">{0}</div>
                         <div className="text-xs font-medium text-gray-600 uppercase tracking-wide">Total Points</div>
                       </div>
                       <div className="text-center p-3 bg-white rounded-lg border border-gray-200">
-                        <div className="text-xl font-bold text-gray-900">{stats.totalTasks}</div>
+                        <div className="text-xl font-bold text-gray-900">{0}</div>
                         <div className="text-xs font-medium text-gray-600 uppercase tracking-wide">Tasks Done</div>
                       </div>
                     </div>

@@ -5,7 +5,6 @@ export function useLocalStorage<T>(key: string, initialValue: T) {
     try {
       const item = window.localStorage.getItem(key);
       const parsed = item ? JSON.parse(item) : initialValue;
-      console.log(`Loading ${key} from localStorage:`, parsed);
       return parsed;
     } catch (error) {
       console.error(`Error loading ${key} from localStorage:`, error);
@@ -18,7 +17,6 @@ export function useLocalStorage<T>(key: string, initialValue: T) {
       const valueToStore = value instanceof Function ? value(storedValue) : value;
       setStoredValue(valueToStore);
       window.localStorage.setItem(key, JSON.stringify(valueToStore));
-      console.log(`Saved ${key} to localStorage:`, valueToStore);
     } catch (error) {
       console.error(`Error saving ${key} to localStorage:`, error);
     }
@@ -31,7 +29,6 @@ export function useLocalStorage<T>(key: string, initialValue: T) {
       if (item) {
         const parsed = JSON.parse(item);
         setStoredValue(parsed);
-        console.log(`Synced ${key} from localStorage:`, parsed);
       }
     } catch (error) {
       console.error(`Error syncing ${key} from localStorage:`, error);

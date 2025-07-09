@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { usePoints } from '../../context/PointsContext';
 import { Plus, Edit2, Trash2, Gift, ShoppingCart } from 'lucide-react';
 import { AddRewardModal } from './AddRewardModal';
 import { RedeemRewardModal } from './RedeemRewardModal';
+import { usePoints } from '../PointsContext';
 
 export const RewardsStoreTab: React.FC = () => {
   const { rewards, deleteReward, getCurrentBalance } = usePoints();
@@ -72,7 +72,6 @@ export const RewardsStoreTab: React.FC = () => {
                       </div>
                       <div className="flex gap-1 ml-3">
                         <button
-                          onClick={() => {/* TODO: Edit reward */}}
                           className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
                           title="Edit reward"
                         >
