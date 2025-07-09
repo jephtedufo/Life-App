@@ -435,3 +435,84 @@ export const mergeData = (
 
   return { habits: mergedHabits, statuses: mergedStatuses };
 };
+
+// --- ALL DATA EXPORT/IMPORT (JSON) ---
+
+export interface FullAppDataExport {
+  habits: Habit[];
+  statuses: HabitStatus[];
+  categories: TaskCategory[];
+  pointLogs: PointLog[];
+  rewards: Reward[];
+  redemptions: RedemptionLog[];
+  goals: PointsGoal[];
+  habitConnections: HabitTaskConnection[];
+  exportDate: string;
+  version: string;
+}
+
+export interface FullAppDataImportResult {
+  success: boolean;
+  data?: FullAppDataExport;
+  errors: string[];
+  warnings: string[];
+}
+
+export const exportAllAppData = (data: Omit<FullAppDataExport, 'exportDate' | 'version'>, filename?: string) => {
+  const exportData: FullAppDataExport = {
+    ...data,
+    exportDate: new Date().toISOString(),
+    version: '2.0',
+  };
+  const json = JSON.stringify(exportData, null, 2);
+  const blob = new Blob([json], { type: 'application/json' });
+  const link = document.createElement('a');
+  if (link.download !== undefined) {
+    const url = URL.createObjectURL(blob);
+    link.setAttribute('href', url);
+    link.setAttribute('download', filename || `life-app-export-${new Date().toISOString().split('T')[0]}.json`);
+    link.style.visibility = 'hidden';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }
+};
+
+export const importAllAppData = async (file: File): Promise<FullAppDataImportResult> => {
+  const result: FullAppDataImportResult = {
+    success: false,
+    errors: [],
+    warnings: [],
+  };
+  try {
+    const text = await file.text();
+    const data = JSON.parse(text);
+    // Basic validation
+    const requiredKeys = [
+      'habits', 'statuses', 'categories', 'pointLogs', 'rewards', 'redemptions', 'goals', 'habitConnections',
+    ];
+    for (const key of requiredKeys) {
+      if (!Array.isArray(data[key])) {
+        result.errors.push(`Missing or invalid array for key: ${key}`);
+      }
+    }
+    if (result.errors.length === 0) {
+      result.success = true;
+      result.data = {
+        habits: data.habits,
+        statuses: data.statuses,
+        categories: data.categories,
+        pointLogs: data.pointLogs,
+        rewards: data.rewards,
+        redemptions: data.redemptions,
+        goals: data.goals,
+        habitConnections: data.habitConnections,
+        exportDate: data.exportDate || '',
+        version: data.version || '2.0',
+      };
+    }
+  } catch (e) {
+    result.errors.push('Failed to parse JSON: ' + (e instanceof Error ? e.message : String(e)));
+  }
+  return result;
+};
