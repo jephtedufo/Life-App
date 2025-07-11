@@ -18,7 +18,6 @@ export const AddRewardModal: React.FC<AddRewardModalProps> = ({
   const [description, setDescription] = useState('');
   const [cost, setCost] = useState(100);
   const [imageUrl, setImageUrl] = useState('');
-  const [columnWidth, setColumnWidth] = useState(1);
   const [showImage, setShowImage] = useState(true);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -29,7 +28,6 @@ export const AddRewardModal: React.FC<AddRewardModalProps> = ({
       setDescription(editingReward.description || '');
       setCost(editingReward.cost || 100);
       setImageUrl(editingReward.imageUrl || '');
-      setColumnWidth(editingReward.columnWidth || 1);
       setShowImage(editingReward.showImage !== false);
     } else {
       // Reset for new reward
@@ -37,7 +35,6 @@ export const AddRewardModal: React.FC<AddRewardModalProps> = ({
       setDescription('');
       setCost(100);
       setImageUrl('');
-      setColumnWidth(1);
       setShowImage(true);
     }
   }, [editingReward, isOpen]);
@@ -62,7 +59,6 @@ export const AddRewardModal: React.FC<AddRewardModalProps> = ({
         description: description.trim(),
         cost,
         imageUrl,
-        columnWidth,
         showImage,
       };
 
@@ -87,7 +83,6 @@ export const AddRewardModal: React.FC<AddRewardModalProps> = ({
     setDescription('');
     setCost(100);
     setImageUrl('');
-    setColumnWidth(1);
     setShowImage(true);
     onClose();
   };
@@ -220,47 +215,25 @@ export const AddRewardModal: React.FC<AddRewardModalProps> = ({
                   />
                 </div>
 
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Card Width
+                {/* Show Image Toggle */}
+                <div className="flex items-center justify-between">
+                  <label className="text-sm font-medium text-gray-700">
+                    Show Image
                   </label>
-                  <div className="flex gap-1">
-                    {[1, 2, 3, 4].map(width => (
-                      <button
-                        key={width}
-                        type="button"
-                        onClick={() => setColumnWidth(width)}
-                        className={`flex-1 py-2 text-xs rounded transition-colors ${
-                          columnWidth === width
-                            ? 'bg-gray-900 text-white'
-                            : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-                        }`}
-                      >
-                        {width}x
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              </div>
-
-              {/* Show Image Toggle */}
-              <div className="flex items-center justify-between">
-                <label className="text-sm font-medium text-gray-700">
-                  Show Image
-                </label>
-                <button
-                  type="button"
-                  onClick={() => setShowImage(!showImage)}
-                  className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-                    showImage ? 'bg-gray-900' : 'bg-gray-200'
-                  }`}
-                >
-                  <span
-                    className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
-                      showImage ? 'translate-x-6' : 'translate-x-1'
+                  <button
+                    type="button"
+                    onClick={() => setShowImage(!showImage)}
+                    className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
+                      showImage ? 'bg-gray-900' : 'bg-gray-200'
                     }`}
-                  />
-                </button>
+                  >
+                    <span
+                      className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                        showImage ? 'translate-x-6' : 'translate-x-1'
+                      }`}
+                    />
+                  </button>
+                </div>
               </div>
             </div>
 
@@ -282,7 +255,7 @@ export const AddRewardModal: React.FC<AddRewardModalProps> = ({
                   {description && <div className="text-sm text-gray-600 mb-2">{description}</div>}
                   <div className="flex items-center justify-between">
                     <div className="text-lg font-bold text-blue-600">{cost.toLocaleString()} points</div>
-                    <div className="text-xs text-gray-500">{columnWidth}x width</div>
+                    <div className="text-xs text-gray-500">1x width</div>
                   </div>
                 </div>
               </div>

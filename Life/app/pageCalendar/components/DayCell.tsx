@@ -4,6 +4,8 @@ import { Habit, HabitStatus } from '../../types';
 import { useHabits } from '../../pageHabits/HabitContext';
 import { usePoints } from '../../pagePoints/PointsContext';
 import { isToday, isPastDate } from '../../utils/dateUtils';
+import failSfx from '../../sfx/fail.wav';
+import successSfx from '../../sfx/success.wav';
 
 interface DayCellProps {
   date: Date;
@@ -39,11 +41,7 @@ export const DayCell: React.FC<DayCellProps> = ({ date, habits, statuses, allowP
 
   const playSound = async (type: 'success' | 'failure') => {
     try {
-      const sound = new Audio(
-        type === 'success'
-          ? 'https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3'
-          : 'https://assets.mixkit.co/active_storage/sfx/2572/2572-preview.mp3'
-      );
+      const sound = new Audio(type === 'success' ? successSfx : failSfx);
       await sound.play();
     } catch (error) {
       console.error('Error playing sound:', error);
@@ -96,24 +94,28 @@ export const DayCell: React.FC<DayCellProps> = ({ date, habits, statuses, allowP
       .join('');
   };
 
-  const handleHabitClick = (habitId: string, event: React.MouseEvent) => {
+  const handleHabitClick = async (habitId: string, event: React.MouseEvent) => {
     event.preventDefault();
     event.stopPropagation();
     
     const canEdit = isDateToday || (isPast && allowPastEditing);
     if (!canEdit) return;
     
+    // Play fail sound on left click
+    await playSound('failure');
     // Left click marks as successful
     handleStatusUpdate(habitId, 'success', event);
   };
 
-  const handleHabitRightClick = (habitId: string, event: React.MouseEvent) => {
+  const handleHabitRightClick = async (habitId: string, event: React.MouseEvent) => {
     event.preventDefault();
     event.stopPropagation();
     
     const canEdit = isDateToday || (isPast && allowPastEditing);
     if (!canEdit) return;
     
+    // Play success sound on right click
+    await playSound('success');
     // Right click marks as failure
     handleStatusUpdate(habitId, 'failure', event);
   };

@@ -5,7 +5,7 @@ import { AddTaskModal } from './AddTaskModal';
 import { AddRewardModal } from './AddRewardModal';
 
 export const ManageTab: React.FC = () => {
-  const { categories, rewards, deleteCategory, deleteReward, updateReward, updateCategory, setCategories } = usePoints();
+  const { categories, rewards, deleteCategory, deleteReward, updateReward, updateCategory, setCategories, setRewards } = usePoints();
   const [editingTask, setEditingTask] = useState<any>(null);
   const [editingReward, setEditingReward] = useState<any>(null);
   const [showAddTask, setShowAddTask] = useState(false);
@@ -32,13 +32,6 @@ export const ManageTab: React.FC = () => {
     updateReward({
       ...reward,
       showImage: !reward.showImage
-    });
-  };
-
-  const updateRewardColumnWidth = (reward: any, width: number) => {
-    updateReward({
-      ...reward,
-      columnWidth: width
     });
   };
 
@@ -74,11 +67,9 @@ export const ManageTab: React.FC = () => {
     if (rewardIndex > 0) {
       const newRewards = [...rewards];
       [newRewards[rewardIndex], newRewards[rewardIndex - 1]] = [newRewards[rewardIndex - 1], newRewards[rewardIndex]];
-      
-      // Update priorities
-      newRewards.forEach((reward, index) => {
-        updateReward({ ...reward, priority: index });
-      });
+      // Update priorities in the new order
+      const updatedRewards = newRewards.map((reward, idx) => ({ ...reward, priority: idx }));
+      setRewards(updatedRewards);
     }
   };
 
@@ -87,11 +78,9 @@ export const ManageTab: React.FC = () => {
     if (rewardIndex < rewards.length - 1) {
       const newRewards = [...rewards];
       [newRewards[rewardIndex], newRewards[rewardIndex + 1]] = [newRewards[rewardIndex + 1], newRewards[rewardIndex]];
-      
-      // Update priorities
-      newRewards.forEach((reward, index) => {
-        updateReward({ ...reward, priority: index });
-      });
+      // Update priorities in the new order
+      const updatedRewards = newRewards.map((reward, idx) => ({ ...reward, priority: idx }));
+      setRewards(updatedRewards);
     }
   };
 
@@ -364,49 +353,35 @@ export const ManageTab: React.FC = () => {
               <p className="text-gray-600">No shop items created yet</p>
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
               {sortedRewards.map((reward, index) => {
                 const hasImage = reward.showImage !== false && reward.imageUrl;
-                
                 return (
-                  <div key={reward.id} className="bg-white rounded-lg border border-gray-200 overflow-hidden">
-                    {/* Image Preview with Toggle */}
-                    {hasImage ? (
-                      <div className="aspect-video bg-gray-100 flex items-center justify-center relative">
-                        <img 
-                          src={reward.imageUrl} 
+                  <div key={reward.id} className={`bg-white rounded-lg border border-gray-200 overflow-hidden flex flex-col h-full ${
+                    reward.columnWidth === 2 ? 'md:col-span-2' : reward.columnWidth === 3 ? 'md:col-span-3' : reward.columnWidth === 4 ? 'md:col-span-4' : 'md:col-span-1'
+                  }`}>
+                    {/* Card size preview */}
+                    <div className={
+                      reward.columnWidth === 2 ? 'aspect-[2/1] md:aspect-[2/1]' :
+                      reward.columnWidth === 3 || reward.columnWidth === 4 ? 'aspect-[4/1] md:aspect-[4/1]' :
+                      'aspect-square md:aspect-square'
+                    }>
+                      {hasImage ? (
+                        <img
+                          src={reward.imageUrl}
                           alt={reward.title}
                           className="w-full h-full object-cover"
                           onError={(e) => {
                             console.error('Image failed to load:', reward.imageUrl);
                           }}
                         />
-                        <button
-                          onClick={() => toggleRewardImageVisibility(reward)}
-                          className="absolute top-2 right-2 p-1.5 bg-black bg-opacity-50 text-white rounded-lg hover:bg-opacity-70 transition-colors"
-                          title="Hide image"
-                        >
-                          <EyeOff size={12} />
-                        </button>
-                      </div>
-                    ) : (
-                      <div className="p-4 border-b border-gray-200">
-                        <div className="flex items-center justify-between">
-                          <span className="text-sm text-gray-500">No image</span>
-                          {reward.imageUrl && (
-                            <button
-                              onClick={() => toggleRewardImageVisibility(reward)}
-                              className="p-1.5 bg-gray-100 text-gray-600 rounded-lg hover:bg-gray-200 transition-colors"
-                              title="Show image"
-                            >
-                              <Eye size={12} />
-                            </button>
-                          )}
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200">
+                          <Gift size={48} className="text-gray-400" />
                         </div>
-                      </div>
-                    )}
-                    
-                    <div className="p-4">
+                      )}
+                    </div>
+                    <div className="p-4 flex flex-col flex-1">
                       <div className="flex items-start justify-between mb-3">
                         <div className="flex items-start gap-2 flex-1">
                           <div className="flex flex-col gap-1">
@@ -432,9 +407,6 @@ export const ManageTab: React.FC = () => {
                             {reward.description && (
                               <p className="text-sm text-gray-600 mb-2">{reward.description}</p>
                             )}
-                            <p className="text-sm text-gray-500">
-                              Cost: {reward.cost.toLocaleString()} points
-                            </p>
                           </div>
                         </div>
                         <div className="flex gap-1">
@@ -454,17 +426,20 @@ export const ManageTab: React.FC = () => {
                           </button>
                         </div>
                       </div>
-
-                      {/* Column Width Controls */}
-                      <div className="border-t pt-3">
+                      <div className="flex-1" />
+                      {/* Cost and Card Size Controls anchored at bottom */}
+                      <div className="border-t pt-3 mt-3">
+                        <p className="text-sm text-gray-500 mb-2">
+                          Cost: {reward.cost.toLocaleString()} points
+                        </p>
                         <label className="block text-xs font-medium text-gray-700 mb-2">
-                          Card Width
+                          Card Size
                         </label>
                         <div className="flex gap-1">
                           {[1, 2, 3, 4].map(width => (
                             <button
                               key={width}
-                              onClick={() => updateRewardColumnWidth(reward, width)}
+                              onClick={() => updateReward({ ...reward, columnWidth: width })}
                               className={`px-2 py-1 text-xs rounded transition-colors ${
                                 (reward.columnWidth || 1) === width
                                   ? 'bg-gray-900 text-white'

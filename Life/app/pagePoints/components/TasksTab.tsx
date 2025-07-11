@@ -2,20 +2,33 @@ import React, { useState } from 'react';
 import { usePoints } from '../PointsContext';
 import { Plus, Minus, Edit2 } from 'lucide-react';
 import { AddTaskModal } from './AddTaskModal';
+import successSfx from '../../sfx/success.wav';
+import failSfx from '../../sfx/fail.wav';
 
 export const TasksTab: React.FC = () => {
   const { categories, addPointLog, updateCategory } = usePoints();
   const [editMode, setEditMode] = useState(false);
   const [editingTask, setEditingTask] = useState<any>(null);
 
-  const handleAddPoints = (categoryId: string) => {
+  const playSound = async (type: 'success' | 'failure') => {
+    try {
+      const sound = new Audio(type === 'success' ? successSfx : failSfx);
+      await sound.play();
+    } catch (error) {
+      console.error('Error playing sound:', error);
+    }
+  };
+
+  const handleAddPoints = async (categoryId: string) => {
+    await playSound('success');
     const category = categories.find(c => c.id === categoryId);
     if (category) {
       addPointLog(categoryId, 'Points added', 1, category.defaultPointValue);
     }
   };
 
-  const handleRemovePoints = (categoryId: string) => {
+  const handleRemovePoints = async (categoryId: string) => {
+    await playSound('failure');
     const category = categories.find(c => c.id === categoryId);
     if (category) {
       addPointLog(categoryId, 'Points removed', 1, -category.defaultPointValue);

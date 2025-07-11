@@ -16,16 +16,8 @@ export const ShopTab: React.FC = () => {
     .sort((a, b) => (a.priority || 0) - (b.priority || 0))
     .filter(reward => reward.showImage !== false || !reward.imageUrl); // Show items with images first
 
-  const getGridColumnClass = (columnWidth: number) => {
-    switch (columnWidth) {
-      case 2: return 'md:col-span-2';
-      case 3: return 'md:col-span-3';
-      case 4: return 'md:col-span-4';
-      default: return 'md:col-span-1';
-    }
-  };
-
-  const isLargeCard = (columnWidth: number) => columnWidth >= 3;
+  // Remove getGridColumnClass, isLargeCard, and all columnWidth logic
+  // Redesign the rewards grid to a simple, modern layout
 
   return (
     <>
@@ -49,128 +41,103 @@ export const ShopTab: React.FC = () => {
             </button>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 auto-rows-max">
-            {sortedRewards.map(reward => {
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 auto-rows-[22rem] items-stretch">
+            {rewards.map(reward => {
               const canAfford = currentBalance >= reward.cost;
-              const columnWidth = reward.columnWidth || 1;
-              const isLarge = isLargeCard(columnWidth);
               const hasImage = reward.showImage !== false && reward.imageUrl;
-
+              const colSpan = reward.columnWidth === 2 ? 'md:col-span-2' : reward.columnWidth === 3 ? 'md:col-span-3' : reward.columnWidth === 4 ? 'md:col-span-4' : 'md:col-span-1';
+              // Set a fixed height for all cards on md+ screens
+              const fixedHeightClass = 'md:h-64';
+              let aspectClass = 'aspect-square';
+              if (reward.columnWidth === 2) aspectClass = 'aspect-[2/1]';
+              else if (reward.columnWidth === 3 || reward.columnWidth === 4) aspectClass = 'aspect-[4/1]';
               return (
-                <div 
-                  key={reward.id} 
-                  className={`bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-lg transition-all duration-300 group ${getGridColumnClass(columnWidth)} ${
-                    canAfford ? '' : 'opacity-75'
-                  }`}
+                <div
+                  key={reward.id}
+                  className={`bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden transition-all duration-300 group flex flex-col h-full ${colSpan} ${reward.columnWidth === 2 ? 'h-full min-h-[22rem]' : ''}`}
+                  style={reward.columnWidth === 2 ? { height: '100%' } : {}}
                 >
-                  {/* Product Image */}
-                  <div className={`${isLarge ? 'aspect-[2/1]' : 'aspect-square'} bg-gray-100 overflow-hidden relative`}>
+                  {/* For 3x/4x: image as background, glassmorphism info overlay */}
+                  {reward.columnWidth === 2 || reward.columnWidth === 3 || reward.columnWidth === 4 ? (
+                  <div
+                    className={`relative w-full h-full flex flex-col justify-end ${fixedHeightClass} ${reward.columnWidth === 2 ? 'h-full min-h-[22rem]' : ''} ${reward.columnWidth === 4 ? 'border-4x-custom-height' : ''}`}
+                    // @ts-expect-error: customHeight is for demonstration; add to Reward type for production
+                    style={reward.columnWidth === 4 ? { minHeight: reward.customHeight ?? '28rem', height: reward.customHeight ?? '28rem' } : reward.columnWidth === 2 ? { minHeight: '22rem', height: '100%' } : { minHeight: '22rem' }}
+                  >
                     {hasImage ? (
-                      <>
-                        <img 
-                          src={reward.imageUrl} 
-                          alt={reward.title}
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                          onError={(e) => {
-                            console.error('Image failed to load:', reward.imageUrl);
-                          }}
-                        />
-                        {isLarge && (
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-                        )}
-                      </>
+                      <img
+                        src={reward.imageUrl}
+                        alt={reward.title}
+                        className="absolute inset-0 w-full h-full object-cover z-0 transition-transform duration-300 group-hover:scale-105"
+                        onError={() => {}}
+                      />
                     ) : (
-                      <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200">
-                        <ShoppingBag size={isLarge ? 64 : 48} className="text-gray-400" />
+                      <div className="absolute inset-0 w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200 z-0">
+                        <ShoppingBag size={64} className="text-gray-400" />
                       </div>
                     )}
-
-                    {/* Large card overlay content */}
-                    {isLarge && (
-                      <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
-                        <div className="backdrop-blur-sm bg-black/20 rounded-lg p-4 border border-white/20">
-                          <h4 className="font-bold text-xl mb-2">{reward.title}</h4>
+                    <div className="relative z-10 w-full flex flex-col justify-end h-full">
+                      <div className="absolute bottom-0 left-0 right-0 p-6">
+                        <div className="backdrop-blur-md bg-black/40 rounded-xl p-4 shadow-lg">
+                          <h4 className="font-bold text-white text-2xl mb-2 line-clamp-2">{reward.title}</h4>
                           {reward.description && (
-                            <p className="text-sm opacity-90 mb-3">{reward.description}</p>
+                            <p className="text-base text-white mb-3 line-clamp-2">{reward.description}</p>
                           )}
-                          <div className="flex items-center justify-between">
-                            <div className="flex items-center gap-2">
-                              <Sparkles size={16} className="text-amber-300" />
-                              <div>
-                                <div className="text-2xl font-bold">
-                                  {reward.cost.toLocaleString()}
-                                </div>
-                                <div className="text-xs font-medium uppercase tracking-wide opacity-75">
-                                  Points
-                                </div>
-                              </div>
-                            </div>
+                          <div className="flex items-center mt-4">
                             <button
                               onClick={() => setRedeemingReward(reward.id)}
                               disabled={!canAfford}
-                              className={`p-3 rounded-lg transition-all flex items-center gap-2 ${
-                                canAfford
-                                  ? 'bg-white/20 backdrop-blur-sm text-white hover:bg-white/30'
-                                  : 'bg-gray-500/50 text-gray-300 cursor-not-allowed'
-                              }`}
+                              className={`p-3 rounded-lg transition-all flex items-center gap-1.5 ${canAfford ? 'bg-white text-gray-900 hover:bg-gray-100 shadow-sm hover:shadow-md' : 'bg-gray-200 text-gray-400 cursor-not-allowed'}`}
                               title={canAfford ? 'Purchase' : 'Insufficient Points'}
                             >
                               <ShoppingBag size={20} />
+                              <span className="text-xs font-medium">Buy</span>
                             </button>
+                            <div style={{ marginLeft: '1em' }} className="flex flex-col items-start leading-none">
+                              <span className="text-2xl font-bold text-white">{reward.cost.toLocaleString()}</span>
+                              <span className="text-base font-medium text-white" style={{ marginTop: '-0.3em' }}>Points</span>
+                            </div>
                           </div>
                         </div>
                       </div>
-                    )}
+                    </div>
                   </div>
-
-                  {/* Regular card content */}
-                  {!isLarge && (
-                    <div className="p-4">
+                ) : (
+                    <div className={`${aspectClass} ${fixedHeightClass} bg-gray-100 overflow-hidden relative h-full min-h-[22rem]`} style={reward.columnWidth === 2 ? { minHeight: '22rem', height: '100%' } : {}}>
+                      {hasImage ? (
+                        <img
+                          src={reward.imageUrl}
+                          alt={reward.title}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                          onError={() => {}}
+                        />
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200">
+                          <ShoppingBag size={48} className="text-gray-400" />
+                        </div>
+                      )}
+                    </div>
+                  )}
+                  {/* Info for 1x cards */}
+                  {reward.columnWidth === 1 && (
+                    <div className="p-4 flex flex-col flex-1">
                       <h4 className="font-bold text-gray-900 text-lg mb-2 line-clamp-2">{reward.title}</h4>
-                      
                       {reward.description && (
                         <p className="text-sm text-gray-600 mb-3 line-clamp-2">{reward.description}</p>
                       )}
-
-                      {/* Redesigned Price and Action Section */}
-                      <div className="flex items-center justify-between bg-gray-50 rounded-lg p-3 border border-gray-100">
-                        <div className="flex items-center gap-2">
-                          <Sparkles size={14} className={canAfford ? 'text-amber-500' : 'text-gray-400'} />
-                          <div className="text-center">
-                            <div className={`text-lg font-bold ${
-                              canAfford ? 'text-gray-900' : 'text-gray-400'
-                            }`}>
-                              {reward.cost.toLocaleString()}
-                            </div>
-                            <div className={`text-xs font-medium uppercase tracking-wide ${
-                              canAfford ? 'text-gray-600' : 'text-gray-400'
-                            }`}>
-                              Points
-                            </div>
-                          </div>
-                        </div>
-
-                        {/* Redesigned Purchase Button */}
+                      <div className="flex-1" />
+                      <div className="flex items-center justify-between mt-10 pt-4 border-t border-gray-100">
+                        <span className={`text-lg font-bold ${canAfford ? 'text-gray-900' : 'text-gray-400'}`}>{reward.cost.toLocaleString()}<span className="ml-2 text-base font-medium">Points</span></span>
                         <button
                           onClick={() => setRedeemingReward(reward.id)}
                           disabled={!canAfford}
-                          className={`p-2.5 rounded-lg transition-all flex items-center gap-1.5 ${
-                            canAfford
-                              ? 'bg-gray-900 text-white hover:bg-gray-800 shadow-sm hover:shadow-md'
-                              : 'bg-gray-200 text-gray-400 cursor-not-allowed'
-                          }`}
+                          className={`p-2.5 rounded-lg transition-all flex items-center gap-1.5 ${canAfford ? 'bg-gray-900 text-white hover:bg-gray-800 shadow-sm hover:shadow-md' : 'bg-gray-200 text-gray-400 cursor-not-allowed'}`}
                           title={canAfford ? 'Purchase' : 'Insufficient Points'}
                         >
                           <ShoppingBag size={16} />
                           <span className="text-xs font-medium">Buy</span>
                         </button>
                       </div>
-
-                      {!canAfford && (
-                        <p className="text-xs text-red-500 text-center mt-2 font-medium">
-                          Need {(reward.cost - currentBalance).toLocaleString()} more points
-                        </p>
-                      )}
                     </div>
                   )}
                 </div>
