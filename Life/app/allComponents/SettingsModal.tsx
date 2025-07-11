@@ -30,13 +30,11 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
     pointLogs,
     rewards,
     redemptions,
-    goals,
     habitConnections,
     setCategories,
     setPointLogs,
     setRewards,
     setRedemptions,
-    setGoals,
     setHabitConnections,
     resetAllPointsData,
   } = usePoints();
@@ -44,7 +42,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
   const handleResetAllData = () => {
     if (confirm('Are you sure you want to reset ALL data including habits and points? This action cannot be undone.')) {
       onResetData();
-      resetAllPointsData();
+      // resetAllPointsData();
       onClose();
     }
   };
@@ -64,7 +62,6 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
       pointLogs,
       rewards,
       redemptions,
-      goals,
       habitConnections,
     });
   };
@@ -81,7 +78,6 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
       setPointLogs(result.data.pointLogs);
       setRewards(result.data.rewards);
       setRedemptions(result.data.redemptions);
-      setGoals(result.data.goals);
       setHabitConnections(result.data.habitConnections);
       alert('Data imported successfully!');
       onClose();

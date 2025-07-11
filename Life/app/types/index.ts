@@ -61,15 +61,6 @@ export interface RedemptionLog {
   createdAt: string;
 }
 
-export interface PointsGoal {
-  id: string;
-  title: string;
-  targetPoints: number;
-  startDate: string;
-  endDate: string;
-  createdAt: string;
-}
-
 export interface HabitTaskConnection {
   id: string;
   habitId: string;

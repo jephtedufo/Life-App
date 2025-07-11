@@ -1,19 +1,17 @@
 import React, { createContext, useContext, useCallback } from 'react';
 import { useLocalStorage } from '../hooks/useLocalStorage';
-import { TaskCategory, PointLog, Reward, RedemptionLog, PointsGoal, HabitTaskConnection } from '../types';
+import { TaskCategory, PointLog, Reward, RedemptionLog, HabitTaskConnection } from '../types';
 
 interface PointsContextType {
   categories: TaskCategory[];
   pointLogs: PointLog[];
   rewards: Reward[];
   redemptions: RedemptionLog[];
-  goals: PointsGoal[];
   habitConnections: HabitTaskConnection[];
   setCategories: (categories: TaskCategory[] | ((prev: TaskCategory[]) => TaskCategory[])) => void;
   setPointLogs: (logs: PointLog[] | ((prev: PointLog[]) => PointLog[])) => void;
   setRewards: (rewards: Reward[] | ((prev: Reward[]) => Reward[])) => void;
   setRedemptions: (redemptions: RedemptionLog[] | ((prev: RedemptionLog[]) => RedemptionLog[])) => void;
-  setGoals: (goals: PointsGoal[] | ((prev: PointsGoal[]) => PointsGoal[])) => void;
   setHabitConnections: (connections: HabitTaskConnection[] | ((prev: HabitTaskConnection[]) => HabitTaskConnection[])) => void;
   addCategory: (name: string, description: string, categoryAmount: number, color: string) => void;
   updateCategory: (category: TaskCategory) => void;
@@ -24,9 +22,6 @@ interface PointsContextType {
   updateReward: (reward: Reward) => void;
   deleteReward: (id: string) => void;
   redeemReward: (rewardId: string) => boolean;
-  addGoal: (title: string, targetPoints: number, startDate: string, endDate: string) => void;
-  updateGoal: (goal: PointsGoal) => void;
-  deleteGoal: (id: string) => void;
   connectHabitToTask: (habitId: string, taskId: string) => void;
   disconnectHabitFromTask: (habitId: string, taskId: string) => void;
   addPointsForHabit: (habitId: string) => void;
@@ -44,7 +39,6 @@ export const PointsProvider: React.FC<{ children: React.ReactNode }> = ({ childr
   const [pointLogs, setPointLogs] = useLocalStorage<PointLog[]>('pointLogs', []);
   const [rewards, setRewards] = useLocalStorage<Reward[]>('pointsRewards', []);
   const [redemptions, setRedemptions] = useLocalStorage<RedemptionLog[]>('pointsRedemptions', []);
-  const [goals, setGoals] = useLocalStorage<PointsGoal[]>('pointsGoals', []);
   const [habitConnections, setHabitConnections] = useLocalStorage<HabitTaskConnection[]>('habitConnections', []);
 
   const addCategory = useCallback((name: string, description: string, categoryAmount: number, color: string) => {
@@ -131,26 +125,6 @@ export const PointsProvider: React.FC<{ children: React.ReactNode }> = ({ childr
     return true;
   }, [rewards, redemptions, pointLogs, setRedemptions]);
 
-  const addGoal = useCallback((title: string, targetPoints: number, startDate: string, endDate: string) => {
-    const newGoal: PointsGoal = {
-      id: crypto.randomUUID(),
-      title,
-      targetPoints,
-      startDate,
-      endDate,
-      createdAt: new Date().toISOString(),
-    };
-    setGoals(prev => [...prev, newGoal]);
-  }, [setGoals]);
-
-  const updateGoal = useCallback((goal: PointsGoal) => {
-    setGoals(prev => prev.map(g => g.id === goal.id ? goal : g));
-  }, [setGoals]);
-
-  const deleteGoal = useCallback((id: string) => {
-    setGoals(prev => prev.filter(g => g.id !== id));
-  }, [setGoals]);
-
   const connectHabitToTask = useCallback((habitId: string, taskId: string) => {
     const newConnection: HabitTaskConnection = {
       id: crypto.randomUUID(),
@@ -236,9 +210,8 @@ export const PointsProvider: React.FC<{ children: React.ReactNode }> = ({ childr
     setPointLogs([]);
     setRewards([]);
     setRedemptions([]);
-    setGoals([]);
     setHabitConnections([]);
-  }, [setCategories, setPointLogs, setRewards, setRedemptions, setGoals, setHabitConnections]);
+  }, [setCategories, setPointLogs, setRewards, setRedemptions, setHabitConnections]);
 
   return (
     <PointsContext.Provider value={{
@@ -246,13 +219,11 @@ export const PointsProvider: React.FC<{ children: React.ReactNode }> = ({ childr
       pointLogs,
       rewards,
       redemptions,
-      goals,
       habitConnections,
       setCategories,
       setPointLogs,
       setRewards,
       setRedemptions,
-      setGoals,
       setHabitConnections,
       addCategory,
       updateCategory,
@@ -263,9 +234,6 @@ export const PointsProvider: React.FC<{ children: React.ReactNode }> = ({ childr
       updateReward,
       deleteReward,
       redeemReward,
-      addGoal,
-      updateGoal,
-      deleteGoal,
       connectHabitToTask,
       disconnectHabitFromTask,
       addPointsForHabit,

@@ -41,12 +41,6 @@ export const AddCategoryForm: React.FC<AddCategoryFormProps> = ({ onNavigate }) 
           >
             Add new reward...
           </button>
-          <button
-            onClick={() => setShowGoalModal(true)}
-            className="flex-1 px-4 py-3 border-2 border-dashed border-gray-300 rounded-lg hover:border-gray-400 hover:bg-gray-50 transition-all text-gray-600 text-left"
-          >
-            Add new goal...
-          </button>
           
           {/* Navigation Icons */}
           <button
@@ -114,11 +108,6 @@ export const AddCategoryForm: React.FC<AddCategoryFormProps> = ({ onNavigate }) 
       <AddRewardModal
         isOpen={showRewardModal}
         onClose={() => setShowRewardModal(false)}
-      />
-      {/* Goal Modal */}
-      <AddGoalModal
-        isOpen={showGoalModal}
-        onClose={() => setShowGoalModal(false)}
       />
 
       {/* Settings Modal */}

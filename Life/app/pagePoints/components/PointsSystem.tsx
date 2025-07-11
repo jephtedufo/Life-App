@@ -4,11 +4,10 @@ import { Link2, Target, History, ShoppingCart, Plus, TrendingUp, Settings, Edit2
 import { TasksTab } from './TasksTab';
 import { ShopTab } from './ShopTab';
 import { HistoryTab } from './HistoryTab';
-import { GoalsTab } from './GoalsTab';
 import { ManageTab } from './ManageTab';
 import { ConnectTab } from './ConnectTab';
 
-type PointsTab = 'tasks' | 'shop' | 'goals' | 'history' | 'manage' | 'connect';
+type PointsTab = 'tasks' | 'shop' | 'history' | 'manage' | 'connect';
 
 interface PointsSystemProps {
   hideTitle?: boolean;
@@ -24,7 +23,6 @@ export const PointsSystem: React.FC<PointsSystemProps> = ({ hideTitle = false })
   const tabs = [
     { id: 'tasks' as const, label: 'Tasks', icon: Plus },
     { id: 'shop' as const, label: 'Shop', icon: ShoppingCart },
-    { id: 'goals' as const, label: 'Goals', icon: Target },
     { id: 'history' as const, label: 'History', icon: History },
     { id: 'manage' as const, label: 'Manage', icon: Settings },
     { id: 'connect' as const, label: 'Connect', icon: Link2 },
@@ -103,7 +101,6 @@ export const PointsSystem: React.FC<PointsSystemProps> = ({ hideTitle = false })
         <div className="min-h-[400px]">
           {activeTab === 'tasks' && <TasksTab />}
           {activeTab === 'shop' && <ShopTab />}
-          {activeTab === 'goals' && <GoalsTab />}
           {activeTab === 'history' && <HistoryTab />}
           {activeTab === 'manage' && <ManageTab />}
           {activeTab === 'connect' && <ConnectTab />}
