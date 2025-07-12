@@ -11,6 +11,8 @@
     "vercel-build": "vite build --config config/vite.config.ts"
   },
   "dependencies": {
+    "@builder.io/react": "^8.2.5",
+    "@builder.io/sdk": "^6.1.1",
     "lucide-react": "^0.344.0",
     "papaparse": "^5.5.3",
     "react": "^18.3.1",

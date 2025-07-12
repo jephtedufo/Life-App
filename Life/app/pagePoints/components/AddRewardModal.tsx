@@ -213,26 +213,26 @@ export const AddRewardModal: React.FC<AddRewardModalProps> = ({
                     min="1"
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent"
                   />
-                </div>
+              </div>
 
-                {/* Show Image Toggle */}
-                <div className="flex items-center justify-between">
-                  <label className="text-sm font-medium text-gray-700">
-                    Show Image
-                  </label>
-                  <button
-                    type="button"
-                    onClick={() => setShowImage(!showImage)}
-                    className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-                      showImage ? 'bg-gray-900' : 'bg-gray-200'
+              {/* Show Image Toggle */}
+              <div className="flex items-center justify-between">
+                <label className="text-sm font-medium text-gray-700">
+                  Show Image
+                </label>
+                <button
+                  type="button"
+                  onClick={() => setShowImage(!showImage)}
+                  className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
+                    showImage ? 'bg-gray-900' : 'bg-gray-200'
+                  }`}
+                >
+                  <span
+                    className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                      showImage ? 'translate-x-6' : 'translate-x-1'
                     }`}
-                  >
-                    <span
-                      className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
-                        showImage ? 'translate-x-6' : 'translate-x-1'
-                      }`}
-                    />
-                  </button>
+                  />
+                </button>
                 </div>
               </div>
             </div>

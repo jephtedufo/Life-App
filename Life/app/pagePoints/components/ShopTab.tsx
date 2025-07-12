@@ -52,8 +52,8 @@ export const ShopTab: React.FC = () => {
               if (reward.columnWidth === 2) aspectClass = 'aspect-[2/1]';
               else if (reward.columnWidth === 3 || reward.columnWidth === 4) aspectClass = 'aspect-[4/1]';
               return (
-                <div
-                  key={reward.id}
+                <div 
+                  key={reward.id} 
                   className={`bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden transition-all duration-300 group flex flex-col h-full ${colSpan} ${reward.columnWidth === 2 ? 'h-full min-h-[22rem]' : ''}`}
                   style={reward.columnWidth === 2 ? { height: '100%' } : {}}
                 >
@@ -65,12 +65,12 @@ export const ShopTab: React.FC = () => {
                     style={reward.columnWidth === 4 ? { minHeight: reward.customHeight ?? '28rem', height: reward.customHeight ?? '28rem' } : reward.columnWidth === 2 ? { minHeight: '22rem', height: '100%' } : { minHeight: '22rem' }}
                   >
                     {hasImage ? (
-                      <img
-                        src={reward.imageUrl}
-                        alt={reward.title}
+                        <img 
+                          src={reward.imageUrl} 
+                          alt={reward.title}
                         className="absolute inset-0 w-full h-full object-cover z-0 transition-transform duration-300 group-hover:scale-105"
                         onError={() => {}}
-                      />
+                        />
                     ) : (
                       <div className="absolute inset-0 w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200 z-0">
                         <ShoppingBag size={64} className="text-gray-400" />
