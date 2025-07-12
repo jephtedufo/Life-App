@@ -93,7 +93,7 @@ export const TasksTab: React.FC = () => {
                       {tasks.map(task => (
                         <div 
                           key={task.id} 
-                          className="relative rounded-xl border border-white/20 backdrop-blur-sm p-3 hover:shadow-md transition-all"
+                          className="relative rounded-xl border border-white/20 backdrop-blur-sm p-3 transition-all"
                           style={{
                             background: `linear-gradient(135deg, ${color}10, ${color}05)`,
                             borderColor: `${color}20`
@@ -119,18 +119,20 @@ export const TasksTab: React.FC = () => {
                             <div className="flex gap-2">
                               <button
                                 onClick={() => handleAddPoints(task.id)}
-                                className="flex-1 py-2 px-2 rounded-lg transition-colors text-xs flex items-center justify-center"
+                                className="flex-1 py-2 px-2 rounded-lg transition-all text-xs flex items-center justify-center hover:shadow-md"
                                 style={{ backgroundColor: color, color: '#fff' }}
                                 title="Add Points"
                               >
                                 <Plus size={12} />
+                                <span className="ml-2">Add</span>
                               </button>
                               <button
                                 onClick={() => handleRemovePoints(task.id)}
-                                className="flex-1 py-2 px-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 transition-colors text-xs flex items-center justify-center"
+                                className="flex-1 py-2 px-2 bg-gray-300 text-gray-700 rounded-lg hover:shadow-md transition-all text-xs flex items-center justify-center"
                                 title="Remove Points"
                               >
                                 <Minus size={12} />
+                                <span className="ml-2">Remove</span>
                               </button>
                             </div>
                           </div>
@@ -157,7 +159,7 @@ export const TasksTab: React.FC = () => {
                       {tasks.map(task => (
                         <div 
                           key={task.id} 
-                          className="relative rounded-xl border border-white/20 backdrop-blur-sm p-3 hover:shadow-md transition-all"
+                          className="relative rounded-xl border border-white/20 backdrop-blur-sm p-3 transition-all"
                           style={{
                             background: `linear-gradient(135deg, ${color}10, ${color}05)`,
                             borderColor: `${color}20`
@@ -183,18 +185,20 @@ export const TasksTab: React.FC = () => {
                             <div className="flex gap-2">
                               <button
                                 onClick={() => handleAddPoints(task.id)}
-                                className="flex-1 py-2 px-2 rounded-lg transition-colors text-xs flex items-center justify-center"
+                                className="flex-1 py-2 px-2 rounded-lg transition-all text-xs flex items-center justify-center hover:shadow-md"
                                 style={{ backgroundColor: color, color: '#fff' }}
                                 title="Add Points"
                               >
                                 <Plus size={12} />
+                                <span className="ml-2">Add</span>
                               </button>
                               <button
                                 onClick={() => handleRemovePoints(task.id)}
-                                className="flex-1 py-2 px-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 transition-colors text-xs flex items-center justify-center"
+                                className="flex-1 py-2 px-2 bg-gray-300 text-gray-700 rounded-lg hover:shadow-md transition-all text-xs flex items-center justify-center"
                                 title="Remove Points"
                               >
                                 <Minus size={12} />
+                                <span className="ml-2">Remove</span>
                               </button>
                             </div>
                           </div>
