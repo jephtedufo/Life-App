@@ -1,18 +1,19 @@
-# Jephte Habit Tracker
+# Life App
 
-A beautiful, production-ready habit tracking application built with React, TypeScript, and Tailwind CSS. Track your daily habits with an intuitive calendar interface and comprehensive statistics.
+A modern productivity and self-improvement app built with React, TypeScript, and Tailwind CSS. Track your habits, manage tasks, earn and spend points, and customize your experience—all in one place.
 
 ---
 
 ## 🧭 App Overview
 
-Jephte Habit Tracker is a productivity app that helps you build and maintain positive habits, track your daily routines, and reward yourself for progress. The app is organized into three main pages:
+Life App is designed to help you build positive habits, stay organized, and reward yourself for progress. The app is organized into four main pages:
 
-- **Calendar**: Visualize and mark your daily habit progress.
-- **Habits**: Manage your habits, view detailed statistics, and analyze your performance.
-- **Points**: Earn, spend, and manage points for completing tasks, with a built-in rewards system.
+- **Calendar**: Visualize and mark your daily habit progress in a monthly calendar view.
+- **Tasks**: Manage your daily and recurring tasks, grouped by category.
+- **Shop**: Earn points for completing habits and tasks, then redeem them for custom rewards.
+- **Manage**: Access advanced management tools, settings, and activity logs for your habits, tasks, and rewards.
 
-You can navigate between pages using the navigation icons at the top of each section.
+Navigate between pages using the navigation icons at the top of each section.
 
 ---
 
@@ -21,79 +22,84 @@ You can navigate between pages using the navigation icons at the top of each sec
 ### 1. **Calendar Page**
 - **Purpose**: Visual habit tracking in a monthly calendar layout.
 - **Features**:
-  - **Calendar Grid**: See all days of the current month, with each day showing your habits.
+  - **Calendar Grid**: See all days of the current month, with each day showing your active habits.
   - **Mark Progress**: Click a habit on a day to mark as successful, right-click for failure.
   - **Month Navigation**: Move between months using arrow buttons.
-  - **Add Habit**: Use the "Add new habit..." button to create a new habit.
-  - **Settings Modal**: Access settings (24-hour time, compact mode, edit past days, reset data).
-- **How to Use**: Use the calendar to quickly mark your daily progress. Use the settings to customize your experience.
+  - **Add Habit**: Use the "Add new habit..." button to create a new habit with custom schedule.
+  - **Daily Verse & Clock**: Inspirational Bible verse and live clock at the top.
+- **How to Use**: Use the calendar to quickly mark your daily progress. Add new habits as needed.
 
-### 2. **Habits Page**
-- **Purpose**: Manage your habits and view analytics.
+### 2. **Tasks Page**
+- **Purpose**: Organize and manage your tasks, grouped by category.
 - **Features**:
-  - **Add Habit**: Create new habits with custom schedules.
-  - **Habit List**: View all habits, edit or delete them.
-  - **Statistics Sidebar**: Click a habit to view detailed stats (success rate, streaks, history).
-  - **Summary Cards**: See monthly success rate, highest streak, and alerts for missed days.
-  - **Settings Modal**: Same as Calendar page.
-- **How to Use**: Add, edit, or delete habits. Click on a habit for analytics. Use the sidebar for quick actions.
+  - **Add Task Category**: Create categories for different types of tasks (e.g., Work, School, Fitness).
+  - **Task List**: View, edit, or delete tasks within each category.
+  - **Points System**: Earn points for completing tasks, with customizable point values per category.
+  - **Quick Add**: Use the "Add new task..." button for fast entry.
+- **How to Use**: Add categories and tasks, then mark them as completed to earn points.
 
-### 3. **Points Page**
+### 3. **Shop Page**
 - **Purpose**: Gamify your productivity with a points and rewards system.
 - **Features**:
-  - **Add Task Category**: Create categories for earning points.
   - **Points Overview**: See points earned, available balance, and points spent.
+  - **Rewards Store**: Redeem points for custom rewards. Add, edit, or delete rewards.
+  - **Add Reward**: Use the "Add New Reward" button to create new rewards.
+  - **Purchase Flow**: Buy rewards if you have enough points; see unavailable items grayed out.
+- **How to Use**: Earn points by completing habits and tasks, then redeem them for rewards in the shop.
+
+### 4. **Manage Page**
+- **Purpose**: Advanced management, settings, and activity tracking.
+- **Features**:
   - **Tabs**:
-    - **Tasks**: Add/remove points for task completion.
-    - **Shop**: Redeem points for rewards.
-    - **Goals**: Set and track points-based goals.
-    - **History**: View all points transactions (earned/spent), filter by type/category.
-    - **Manage**: Edit or delete tasks and rewards.
-    - **Connect**: Link habits to tasks so completing a habit automatically earns points.
-  - **Settings Modal**: Reset points data, edit past days, compact mode, etc.
-- **How to Use**: Add tasks, earn points, redeem rewards, and connect habits for automation.
+    - **Habits Manager**: Edit, delete, or reorder habits.
+    - **Task Manager**: Edit, delete, or reorder task categories.
+    - **Shop Manager**: Edit, delete, or reorder shop rewards.
+    - **Connecting Habits**: Link habits to tasks for automation.
+    - **Activity**: View all points transactions (earned/spent), filter by type/category.
+    - **General Settings**: Theme, notification sounds, 24-hour format, compact mode, edit past days, data import/export, reset data.
+- **How to Use**: Use the tabs to manage all aspects of your data and customize your app experience.
 
 ---
 
-## 📝 Prompting Guide
+## 📝 Usage Guide
 
-- **To refer to a page**: "Go to the Calendar page", "Open the Points page", "Switch to Habits"
-- **To add a habit**: "Add a new habit for reading", "Create a habit for exercise on Mon/Wed/Fri"
-- **To mark progress**: "Mark today's habits as successful", "Right-click to mark as failed"
-- **To view stats**: "Show me the statistics for my 'Exercise' habit"
-- **To manage points**: "Add a new task category", "Redeem points for a reward", "View my points history"
-- **To use settings**: "Open settings and enable compact mode", "Reset all data from settings"
+- **To switch pages**: Click the navigation icons (Calendar, Tasks, Shop, Manage) at the top of any page.
+- **To add a habit**: Go to Calendar or Manage > Habits Manager, click "Add new habit...", fill in details, and save.
+- **To add a task**: Go to Tasks or Manage > Task Manager, click "Add new task...", fill in details, and save.
+- **To mark progress**: On Calendar, click a habit to mark as successful, right-click for failure.
+- **To earn points**: Complete tasks or habits; points are awarded automatically.
+- **To redeem rewards**: Go to Shop, click "Buy" on a reward if you have enough points.
+- **To manage data**: Use the Manage page for advanced options, including import/export and reset.
 
 ---
 
 ## 🚀 Features
 
 - **Calendar View**: Visual habit tracking with monthly calendar layout
-- **Habit Management**: Create, edit, and delete habits with custom schedules
-- **Statistics Dashboard**: Comprehensive analytics with success rates and streaks
-- **Compact Mode**: Space-efficient view with habit initials
-- **Past Editing**: Optional ability to modify historical habit data
-- **Real-time Clock**: Live clock display with inspirational Bible verses
+- **Task Management**: Create, edit, and delete tasks with custom categories
+- **Rewards Shop**: Redeem points for custom rewards
+- **Points System**: Earn, spend, and track points for productivity
+- **Statistics & Activity**: View points history and activity logs
+- **Advanced Settings**: Theme, compact mode, 24-hour time, data backup, and more
 - **Responsive Design**: Works seamlessly on desktop and mobile devices
 
 ## 📁 Project Structure
 
 ```
 app/
-├── components/          # React components
-│   ├── ui/             # Reusable UI components
-│   ├── forms/          # Form-related components
-│   ├── layout/         # Layout components
-│   └── modals/         # Modal components
-├── context/            # React context providers
-├── hooks/              # Custom React hooks
-├── types/              # TypeScript type definitions
-├── utils/              # Utility functions
-└── styles/             # CSS and styling files
+├── components/          # Shared React components (dialogs, toggles, context)
+├── pageCalendar/        # Calendar page and related components
+├── pageTasks/           # Tasks page and related components
+├── pageShop/            # Shop page and related components
+├── pageManage/          # Manage page and management tabs
+├── styles/              # CSS and Tailwind styling
+├── types/               # TypeScript type definitions
+├── utils/               # Utility functions
+├── main.tsx             # App entry point
+├── App.tsx              # Main app component
 
-config/                 # Configuration files
-docs/                   # Documentation
-assets/                 # Static assets (images, icons)
+config/                  # Configuration files (Vite, Tailwind, TypeScript, etc.)
+public/                  # Static assets (if any)
 ```
 
 ## 🛠️ Setup Instructions
@@ -107,7 +113,7 @@ assets/                 # Static assets (images, icons)
 1. **Clone the repository**
    ```bash
    git clone <repository-url>
-   cd jephte-habit-tracker
+   cd Life
    ```
 
 2. **Install dependencies**
@@ -128,83 +134,66 @@ assets/                 # Static assets (images, icons)
 ## 📋 Common Workflows
 
 ### Adding a New Habit
-1. Click the "Add new habit..." button or the "+" icon
-2. Enter habit name and select days of the week
-3. Click "Add Habit" to save
+1. Go to the Calendar or Manage page (Habits tab)
+2. Click the "Add new habit..." button
+3. Enter habit name, description, and select repeat days
+4. Click "Add Habit" to save
 
-### Tracking Daily Progress
-- **Calendar View**: Click habits to mark as successful, right-click for failure
-- **Habits Section**: Use Success/Failed buttons in the sidebar
+### Adding a New Task
+1. Go to the Tasks or Manage page (Tasks tab)
+2. Click the "Add new task..." button
+3. Enter task name, description, and point value
+4. Click "Add Task" to save
 
-### Viewing Statistics
-1. Navigate to the Habits section
-2. Click on any habit card to open detailed statistics
-3. View success rate, streaks, and historical data
+### Redeeming a Reward
+1. Go to the Shop page
+2. Click "Buy" on a reward you can afford
+3. Confirm the purchase
 
-### Editing Habits
-1. Open habit details in the Habits section
-2. Click the edit icon (pencil)
-3. Modify name or description
-4. Click outside or press Enter to save
+### Managing Data & Settings
+1. Go to the Manage page
+2. Use the tabs for Habits, Tasks, Shop, Connect, Activity, or Settings
+3. Import/export data, reset, or customize preferences
 
 ## 🗂️ Important File Locations
 
 ### Core Application Files
 - `app/App.tsx` - Main application component
 - `app/main.tsx` - Application entry point
-- `app/index.css` - Global styles and Tailwind imports
+- `app/styles/index.css` - Global styles and Tailwind imports
 
-### Components
-- `app/components/Calendar.tsx` - Monthly calendar view
-- `app/components/Statistics.tsx` - Habits management and statistics
-- `app/components/Header.tsx` - Application header with clock and verse
-- `app/components/DayCell.tsx` - Individual calendar day component
-
-### State Management
-- `app/context/HabitContext.tsx` - Global habit state management
-- `app/hooks/useLocalStorage.ts` - Local storage persistence hook
+### Components & Pages
+- `app/pageCalendar/` - Calendar page and components (AddHabitForm, Calendar, DayCell, Header, Clock)
+- `app/pageTasks/` - Tasks page and components (AddTaskForm, TaskPage, AddTaskModal)
+- `app/pageShop/` - Shop page and components (ShopPage, AddRewardModal, RedeemRewardModal, ShopMTab)
+- `app/pageManage/` - Manage page and management tabs (ManagePage, tabHabits, tabTasks, tabShop, tabConnect, tabActivity)
+- `app/components/` - Shared components (ConfirmDialog, defaultToggleSwitch, context providers)
+- `app/utils/` - Utility functions (dateUtils, useLocalStorage, csvUtils)
+- `app/types/` - TypeScript type definitions
 
 ### Configuration
-- `tailwind.config.js` - Tailwind CSS configuration
-- `vite.config.ts` - Vite build configuration
-- `tsconfig.json` - TypeScript configuration
+- `config/tailwind.config.js` - Tailwind CSS configuration
+- `config/vite.config.ts` - Vite build configuration
+- `config/tsconfig.json` - TypeScript configuration
 
 ## 🎨 Design System
 
-### Colors
-- **Primary**: Gray-900 (dark)
-- **Success**: Green-500
-- **Failure**: Red-500
-- **Background**: Gray-50
-
-### Typography
-- **Headers**: Bold, large sizes (text-6xl for main titles)
-- **Body**: Regular weight, readable sizes
-- **Monospace**: Used for clock display
-
-### Spacing
-- **Sections**: 12 units between major sections
-- **Cards**: 6 units between habit cards
-- **Internal**: 4 units for component padding
+- **Modern, clean UI** with Tailwind CSS
+- **Primary**: Gray-900 (dark), **Success**: Green-500, **Failure**: Red-500, **Background**: Gray-50
+- **Typography**: Large, bold headers; readable body text; monospace for clock
+- **Spacing**: Generous padding and margin for clarity
 
 ## 🔧 Development Guidelines
 
-### File Naming Conventions
-- **Components**: PascalCase (e.g., `HabitCard.tsx`)
+- **Components**: PascalCase (e.g., `AddHabitForm.tsx`)
 - **Hooks**: camelCase with "use" prefix (e.g., `useLocalStorage.ts`)
-- **Types**: PascalCase (e.g., `Habit`, `HabitStatus`)
+- **Types**: PascalCase (e.g., `Habit`, `TaskCategory`)
 - **Utilities**: camelCase (e.g., `dateUtils.ts`)
-
-### Component Structure
-- Keep components under 200 lines
 - Use TypeScript interfaces for props
-- Implement proper error boundaries
-- Follow React best practices
-
-### State Management
+- Keep components focused and under 200 lines when possible
 - Use React Context for global state
-- Local storage for data persistence
-- Custom hooks for reusable logic
+- Persist data with local storage
+- Follow React and TypeScript best practices
 
 ## 📱 Browser Support
 
@@ -224,5 +213,3 @@ assets/                 # Static assets (images, icons)
 ## 📄 License
 
 This project is licensed under the MIT License.
-
-- All configuration files (Vite, TypeScript, Tailwind, ESLint, etc.) are now in the config/ directory for better organization.

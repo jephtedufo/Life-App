@@ -1,10 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { X } from 'lucide-react';
 
 interface HabitConfigModalProps {
   isOpen: boolean;
   onClose: () => void;
   onSubmit: (name: string, description: string, repeatDays: number[]) => void;
+  editingHabit?: {
+    name: string;
+    description: string;
+    repeatDays: number[];
+  };
 }
 
 const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
@@ -14,10 +19,23 @@ export const HabitConfigModal: React.FC<HabitConfigModalProps> = ({
   isOpen,
   onClose,
   onSubmit,
+  editingHabit,
 }) => {
   const [habitName, setHabitName] = useState('');
   const [habitDescription, setHabitDescription] = useState('');
   const [selectedDays, setSelectedDays] = useState<number[]>([]);
+
+  useEffect(() => {
+    if (isOpen && editingHabit) {
+      setHabitName(editingHabit.name || '');
+      setHabitDescription(editingHabit.description || '');
+      setSelectedDays(editingHabit.repeatDays || []);
+    } else if (isOpen) {
+      setHabitName('');
+      setHabitDescription('');
+      setSelectedDays([]);
+    }
+  }, [isOpen, editingHabit]);
 
   const toggleDay = (dayIndex: number) => {
     setSelectedDays(prev => 
@@ -57,13 +75,12 @@ export const HabitConfigModal: React.FC<HabitConfigModalProps> = ({
         className="modal-backdrop bg-black bg-opacity-50 z-40 transition-opacity duration-300"
         onClick={handleCancel}
       />
-      
       {/* Modal - centered in viewport */}
       <div className="modal-backdrop flex items-center justify-center z-50 p-4">
         <div className="bg-white rounded-2xl shadow-xl max-w-md w-full overflow-hidden transform transition-all duration-300 scale-100">
           {/* Header */}
           <div className="flex items-center justify-between px-6 py-4 border-b border-gray-50 bg-gray-50/50">
-            <h3 className="font-semibold text-gray-900 text-base">Add New Habit</h3>
+            <h3 className="font-semibold text-gray-900 text-base">{editingHabit ? 'Edit Habit' : 'Add New Habit'}</h3>
             <button
               onClick={handleCancel}
               className="p-1.5 hover:bg-gray-100 rounded-lg transition-colors"
@@ -71,7 +88,6 @@ export const HabitConfigModal: React.FC<HabitConfigModalProps> = ({
               <X size={16} className="text-gray-500" />
             </button>
           </div>
-          
           {/* Content */}
           <div className="p-6 space-y-6">
             {/* Habit Name Input */}
@@ -89,7 +105,6 @@ export const HabitConfigModal: React.FC<HabitConfigModalProps> = ({
                 autoFocus
               />
             </div>
-
             {/* Habit Description Input */}
             <div>
               <label htmlFor="habit-description" className="block text-sm font-medium text-gray-700 mb-2">
@@ -104,7 +119,6 @@ export const HabitConfigModal: React.FC<HabitConfigModalProps> = ({
                 rows={3}
               />
             </div>
-
             {/* Weekly Schedule */}
             <div>
               <div className="flex items-center justify-between mb-3">
@@ -118,7 +132,6 @@ export const HabitConfigModal: React.FC<HabitConfigModalProps> = ({
                   All Days
                 </button>
               </div>
-              
               {/* Day Selector */}
               <div className="flex gap-2 justify-between">
                 {dayNames.map((day, index) => (
@@ -138,7 +151,6 @@ export const HabitConfigModal: React.FC<HabitConfigModalProps> = ({
                   </button>
                 ))}
               </div>
-              
               {/* Selected Days Summary */}
               {selectedDays.length > 0 && (
                 <div className="mt-3 p-3 bg-gray-50 rounded-lg border border-gray-200">
@@ -155,7 +167,6 @@ export const HabitConfigModal: React.FC<HabitConfigModalProps> = ({
               )}
             </div>
           </div>
-          
           {/* Footer */}
           <div className="flex justify-end gap-3 px-6 py-4 bg-gray-50/30 border-t border-gray-100">
             <button
@@ -169,7 +180,7 @@ export const HabitConfigModal: React.FC<HabitConfigModalProps> = ({
               disabled={!habitName.trim() || selectedDays.length === 0}
               className="px-6 py-2 bg-gray-900 text-white rounded-lg hover:bg-gray-800 disabled:opacity-50 disabled:cursor-not-allowed transition-colors font-medium"
             >
-              Add Habit
+              {editingHabit ? 'Save Changes' : 'Add Habit'}
             </button>
           </div>
         </div>

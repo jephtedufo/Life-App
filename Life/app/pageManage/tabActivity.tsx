@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { usePoints } from '../PointsContext';
+import { usePoints } from '../components/contextPoints';
 import { Trash2, Plus, Minus, Calendar, Filter } from 'lucide-react';
 
-export const HistoryTab: React.FC = () => {
+export const ActivityTab: React.FC = () => {
   const { pointLogs, redemptions, categories, deletePointLog } = usePoints();
   const [filter, setFilter] = useState<'all' | 'earned' | 'spent'>('all');
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
@@ -64,7 +64,7 @@ export const HistoryTab: React.FC = () => {
     <div className="space-y-6">
       {/* Header and Filters */}
       <div className="flex flex-col sm:flex-row gap-4 justify-between items-start sm:items-center">
-        <h3 className="text-xl font-semibold text-gray-900">Points History</h3>
+        <h3 className="text-xl font-semibold text-gray-900">Points Activity</h3>
         
         <div className="flex gap-3">
           {/* Type Filter */}

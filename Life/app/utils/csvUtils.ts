@@ -445,7 +445,6 @@ export interface FullAppDataExport {
   pointLogs: PointLog[];
   rewards: Reward[];
   redemptions: RedemptionLog[];
-  goals: PointsGoal[];
   habitConnections: HabitTaskConnection[];
   exportDate: string;
   version: string;
@@ -489,7 +488,7 @@ export const importAllAppData = async (file: File): Promise<FullAppDataImportRes
     const data = JSON.parse(text);
     // Basic validation
     const requiredKeys = [
-      'habits', 'statuses', 'categories', 'pointLogs', 'rewards', 'redemptions', 'goals', 'habitConnections',
+      'habits', 'statuses', 'categories', 'pointLogs', 'rewards', 'redemptions', 'habitConnections',
     ];
     for (const key of requiredKeys) {
       if (!Array.isArray(data[key])) {
@@ -505,7 +504,6 @@ export const importAllAppData = async (file: File): Promise<FullAppDataImportRes
         pointLogs: data.pointLogs,
         rewards: data.rewards,
         redemptions: data.redemptions,
-        goals: data.goals,
         habitConnections: data.habitConnections,
         exportDate: data.exportDate || '',
         version: data.version || '2.0',

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { useHabits } from '../../pageHabits/HabitContext';
-import { usePoints } from '../PointsContext';
+import { useHabits } from '../components/contextHabits';
+import { usePoints } from '../components/contextPoints';
 import { Link2, Check, X } from 'lucide-react';
 
 export const ConnectTab: React.FC = () => {

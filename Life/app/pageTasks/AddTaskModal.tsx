@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { X } from 'lucide-react';
-import { usePoints } from '../PointsContext';
+import { usePoints } from '../components/contextPoints';
 
 interface AddTaskModalProps {
   isOpen: boolean;

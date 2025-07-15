@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useCallback, useEffect } from 'react';
-import { useLocalStorage } from '../hooks/useLocalStorage';
-import { usePoints } from '../pagePoints/PointsContext';
+import { useLocalStorage } from '../utils/useLocalStorage';
+import { usePoints } from './contextPoints';
 import { Habit, HabitStatus } from '../types';
 
 interface HabitContextType {
