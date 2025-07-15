@@ -77,10 +77,18 @@ export const CalendarPage: React.FC<CalendarPageProps> = ({ onNavigate }) => {
                   date={date}
                   habits={habits}
                   statuses={statuses}
-                  allowPastEditing={allowPastEditing}
                 />
               ))}
             </div>
+          </div>
+        </div>
+        <div className="flex justify-between items-start mb-20 pt-12">
+          <div className="flex-1 pr-8 animate-fade-in">
+            <h1 className="text-7xl font-black text-slate-900 mb-8 tracking-tight bg-gradient-to-r from-slate-900 to-slate-700 bg-clip-text text-transparent">
+              Welcome Back, Jephte
+            </h1>
+            <p className="text-xl text-slate-600 leading-relaxed italic max-w-4xl font-light">
+            </p>
           </div>
         </div>
       </div>
