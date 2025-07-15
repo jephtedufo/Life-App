@@ -3,6 +3,7 @@
      <>
        {/* Fixed backdrop - covers entire viewport */}
        <div 
+   )
 -        className="modal-backdrop bg-black bg-opacity-50 z-40 transition-opacity duration-300"
 +        className="modal-backdrop bg-black/60 backdrop-blur-sm z-40 transition-opacity duration-300"
          onClick={onClose}
